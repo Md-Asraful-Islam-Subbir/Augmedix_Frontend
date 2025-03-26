@@ -1,0 +1,65 @@
+.exploy-container {
+  margin-top: 25px;
+    text-align: center;
+    padding: 30px;
+    background-color: #dbd9d9;
+  }
+  
+  .exploymenulist h2 {
+    font-size: 20px;
+    color: #333;
+    align-items: center;
+    padding: 20px 30px;
+  }
+  
+  .exploymenulist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap; 
+  }
+  
+  .exploy-image {
+    width: 150px;
+    height: 50px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .exploy-image:hover {
+    filter: grayscale(0);
+    transform: scale(1.1);
+  }
+  @media (max-width: 1050px) {
+    .exploy-container {
+        margin-top: 40px; /* Adjust margin for smaller screens */
+    }
+
+    .exploymenulist {
+        gap: 30px; /* Reduce the gap between items */
+    }
+
+    .exploy-image {
+        width: 120px; /* Smaller images for smaller screens */
+        height: 40px; 
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 750px) {
+    .exploy-container {
+        margin-top: 200px; /* Further adjust margin */
+    }
+
+    .exploymenulist {
+        flex-direction: column; /* Stack images vertically */
+        gap: 20px; /* Reduce the gap further */
+    }
+
+    .exploy-image {
+        width: 100px; /* Even smaller images for mobiles */
+        height: 30px; 
+    }
+}

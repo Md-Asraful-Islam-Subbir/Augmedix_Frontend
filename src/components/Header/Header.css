@@ -1,0 +1,115 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 33vw;
+    margin: 0px auto;
+    padding: 0 6vw;
+    background-color: #ffffff;
+}
+
+.header-contents {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5vw;
+    max-width: 80%;
+    animation: fadeIn 3s;
+}
+
+.header-contents h2 {
+    font-weight: 500;
+    color: black; /* Adjust based on your design */
+    font-size: max(4.5vw, 18px);
+}
+
+.header-contents p {
+    color: black; /* Adjust based on your design */
+    font-size: 1.5vw;
+}
+
+.header-contents button {
+    width: 200px;
+    border: none;
+    color: white;
+    font-weight: 500;
+    padding: 1vw 2.3vw;
+    background-color: blue;
+    font-size: max(1vw, 16px);
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.header-image {
+    max-width: 100%; /* Adjust based on your design */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-image img {
+    width: 600px;
+    height: 450px;
+}
+@media (max-width: 1050px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .header-contents {
+        max-width: 80%;
+        align-items: center; /* Center-align contents */
+    }
+
+    .header-image img {
+        width: 450px; /* Smaller image size */
+    }
+
+    .header-contents button {
+        width: 180px; /* Adjust button width */
+        padding: 0.8vw 2vw; /* Adjust padding */
+        font-size: 14px; /* Smaller font size */
+    }
+}
+
+/* For screens smaller than 750px */
+@media (max-width: 750px) {
+    .header-contents p {
+        display: none;
+    }
+
+    .header-contents button {
+        width: 160px; /* Smaller button */
+        padding: 0.5vw 1.5vw;
+        font-size: 12px; /* Smaller font size */
+    }
+
+    .header-image img {
+        width: 300px; /* Adjust image size for mobile */
+        height: auto; /* Maintain aspect ratio */
+    }
+}
+@media (max-width: 630px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-left: 50px;
+    }
+    .header-contents p {
+        display: none;
+    }
+
+    .header-contents button {
+        width: 100px; /* Smaller button */
+        padding: 0.5vw 1.5vw;
+        font-size: 12px; /* Smaller font size */
+    }
+
+    .header-image img {
+        width: 550px; /* Adjust image size for mobile */
+        height: auto; /* Maintain aspect ratio */
+    }
+}
