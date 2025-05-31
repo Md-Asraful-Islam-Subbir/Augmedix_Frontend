@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const DoctorPatients = () => {
   const [patients, setPatients] = useState([]);
+  const [doctor, setDoctor] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [capturing, setCapturing] = useState(false);
   const [recognitionResult, setRecognitionResult] = useState(null); // State to store recognition result
@@ -37,6 +38,29 @@ const DoctorPatients = () => {
 
     fetchPatients();
   }, []);
+useEffect(() => {
+  const fetchDoctor = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("http://localhost:4000/api/doctors", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setDoctor(data);
+      } else {
+        console.error("Failed to fetch doctor profile");
+      }
+    } catch (error) {
+      console.error("Error fetching doctor:", error);
+    }
+  };
+
+  fetchDoctor();
+}, []);
 
   const captureImage = async (patientId) => {
     if (webcamRef.current) {
@@ -134,7 +158,7 @@ const DoctorPatients = () => {
                 <button>Click</button>
               </td>
               <td>
-                <button onClick={() => navigate("/report", { state: { patient } })}>Reports</button>
+                <button onClick={() => navigate("/report", { state: { patient, doctor } })}>Reports</button>
               </td>
               <td>
                 <button className="view-button" onClick={() => setSelectedPatient(patient)}>

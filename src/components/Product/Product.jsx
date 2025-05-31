@@ -1,54 +1,138 @@
-import React from 'react'
-import './Product.css'
+import React from 'react';
+import './Product.css';
+
 const Product = () => {
+  // SVG components for each product
+  const GoIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 77 72" fill="none">
+      <path d="M50.5224 62.3709C49.9676 62.3709 49.5317 61.935 49.5317 61.3803C49.5317 48.2641 38.8724 37.6048 25.7563 37.6048C25.2015 37.6048 24.7656 37.1689 24.7656 36.6142C24.7656 36.0594 25.2015 35.6235 25.7563 35.6235C38.8724 35.6235 49.5317 24.9642 49.5317 11.8481C49.5317 11.2933 49.9676 10.8574 50.5224 10.8574C51.0771 10.8574 51.513 11.2933 51.513 11.8481C51.513 24.9642 62.1723 35.6235 75.2885 35.6235C75.8432 35.6235 76.2791 36.0594 76.2791 36.6142C76.2791 37.1689 75.8432 37.6048 75.2885 37.6048C63.5394 37.6048 53.6132 29.6995 50.5224 18.9411C48.0854 27.4606 41.3688 34.1772 32.8493 36.6142C41.3688 39.0512 48.1052 45.7875 50.5422 54.3071C52.365 47.9669 56.5851 42.4392 62.4299 39.071C62.9054 38.7936 63.4998 38.9521 63.7772 39.4276C64.0546 39.9031 63.8961 40.4975 63.4206 40.7749C56.0898 45.0148 51.5328 52.9004 51.5328 61.3803C51.5328 61.935 51.0969 62.3709 50.5422 62.3709H50.5224Z" fill="#32D264"></path>
+      <path d="M15.8503 31.7006C15.2955 31.7006 14.8597 31.2647 14.8597 30.71C14.8597 23.0622 8.63842 16.8409 0.990644 16.8409C0.435883 16.8409 0 16.4051 0 15.8503C0 15.2955 0.435883 14.8597 0.990644 14.8597C8.63842 14.8597 14.8597 8.63842 14.8597 0.990644C14.8597 0.435883 15.2955 0 15.8503 0C16.4051 0 16.8409 0.435883 16.8409 0.990644C16.8409 8.63842 23.0622 14.8597 30.71 14.8597C31.2647 14.8597 31.7006 15.2955 31.7006 15.8503C31.7006 16.4051 31.2647 16.8409 30.71 16.8409C23.9141 16.8409 18.0892 12.5416 15.8503 6.51844C14.2455 10.8178 10.8178 14.2455 6.51844 15.8503C10.8376 17.4551 14.2653 20.8828 15.8701 25.202C17.1381 21.7942 19.5553 18.8619 22.8046 16.9796C23.2801 16.7023 23.8745 16.8608 24.1519 17.3363C24.4293 17.8118 24.2708 18.4062 23.7953 18.6835C19.5157 21.1602 16.8608 25.7567 16.8608 30.6902C16.8608 31.2449 16.4249 31.6808 15.8701 31.6808L15.8503 31.7006Z" fill="#32D264"></path>
+      <path d="M15.8503 71.9999C15.2955 71.9999 14.8597 71.564 14.8597 71.0093C14.8597 63.3615 8.63842 57.1403 0.990644 57.1403C0.435883 57.1403 0 56.7044 0 56.1496C0 55.5949 0.435883 55.159 0.990644 55.159C8.63842 55.159 14.8597 48.9377 14.8597 41.29C14.8597 40.7352 15.2955 40.2993 15.8503 40.2993C16.4051 40.2993 16.8409 40.7352 16.8409 41.29C16.8409 48.9377 23.0622 55.159 30.71 55.159C31.2647 55.159 31.7006 55.5949 31.7006 56.1496C31.7006 56.7044 31.2647 57.1403 30.71 57.1403C23.9141 57.1403 18.0892 52.8409 15.8503 46.8178C14.2455 51.1171 10.8178 54.5448 6.51844 56.1496C10.8376 57.7545 14.2653 61.1821 15.8701 65.5013C17.1381 62.0935 19.5553 59.1612 22.8046 57.279C23.2801 57.0016 23.8745 57.1601 24.1519 57.6356C24.4293 58.1111 24.2708 58.7055 23.7953 58.9829C19.5157 61.4595 16.8608 66.0561 16.8608 70.9895C16.8608 71.5442 16.4249 71.9801 15.8701 71.9801L15.8503 71.9999Z" fill="#32D264"></path>
+    </svg>
+  );
+
+  const AssistIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 71 72" fill="none">
+      <path d="M41.8603 41.3299C41.2874 41.3299 40.8373 40.8798 40.8373 40.3069C40.8373 30.0358 32.4894 21.688 22.2183 21.688C21.6454 21.688 21.1953 21.2379 21.1953 20.665C21.1953 20.0921 21.6454 19.6419 22.2183 19.6419C32.4894 19.6419 40.8373 11.2941 40.8373 1.02302C40.8373 0.450128 41.2874 0 41.8603 0C42.4332 0 42.8833 0.450128 42.8833 1.02302C42.8833 11.2941 51.2311 19.6419 61.5022 19.6419C62.0751 19.6419 62.5252 20.0921 62.5252 20.665C62.5252 21.2379 62.0751 21.688 61.5022 21.688C52.3564 21.688 44.5815 15.7136 41.8603 7.44757C39.8142 13.688 34.8833 18.6189 28.6429 20.665C34.8833 22.711 39.8142 27.6419 41.8603 33.8824C43.4357 29.1151 46.7094 24.9821 51.1697 22.4041C51.6608 22.1176 52.2951 22.2813 52.561 22.7724C52.8475 23.2634 52.6838 23.8772 52.1928 24.1637C46.4434 27.4783 42.8833 33.6573 42.8833 40.2864C42.8833 40.8593 42.4332 41.3095 41.8603 41.3095V41.3299Z" fill="#B482E6"></path>
+      <path d="M42.0688 70.4244C41.1072 70.4244 40.1456 70.3221 39.1839 70.0765L17.3323 64.9205C16.7799 64.7978 16.432 64.2453 16.5752 63.6929C16.7185 63.1405 17.2504 62.8131 17.8029 62.9359L39.6545 68.0919C42.3348 68.7262 45.2197 68.2556 47.5522 66.8029L67.7057 54.3425C68.299 53.9742 68.7287 53.4014 68.8924 52.7057C69.0561 52.0305 68.9333 51.3144 68.565 50.7211C67.808 49.4934 66.1712 49.1047 64.9435 49.8617L57.0049 54.7722C56.5343 55.0791 55.9001 54.9154 55.5931 54.4448C55.2862 53.9742 55.4499 53.34 55.9205 53.0331L63.8591 48.1226C64.9231 47.4679 66.1711 47.2632 67.3988 47.5497C68.6059 47.8361 69.6494 48.5727 70.3041 49.6367C70.9589 50.7006 71.1635 51.9487 70.877 53.1763C70.5906 54.4039 69.854 55.4269 68.7901 56.0817L48.6571 68.542C46.652 69.7696 44.4013 70.4244 42.1098 70.4244H42.0688Z" fill="#B482E6"></path>
+      <path d="M46.3247 60.6649C45.9769 60.6649 45.6291 60.624 45.2812 60.5422L35.5421 58.2506C34.9897 58.1278 34.6418 57.5754 34.7851 57.023C34.9078 56.4706 35.4603 56.1432 36.0127 56.266L45.7518 58.5575C47.0817 58.8644 48.4321 58.046 48.739 56.7161C49.0459 55.3862 48.2275 54.0358 46.8976 53.7289L36.5242 51.2736C35.2352 50.9667 34.0076 50.4961 32.8413 49.8823L25.0255 45.7289C22.7748 44.5217 20.0741 44.3171 17.6597 45.1764L11.6035 47.2839C11.0715 47.468 10.4782 47.1816 10.294 46.6496C10.1099 46.1176 10.3963 45.5243 10.9283 45.3401L16.9846 43.2327C19.9308 42.2097 23.225 42.4552 25.9871 43.9079L33.803 48.0614C34.8055 48.5933 35.8899 49.0025 36.9948 49.2685L47.3682 51.7238C49.803 52.2966 51.317 54.7314 50.7441 57.1662C50.2531 59.2532 48.3912 60.6649 46.3452 60.6649H46.3247Z" fill="#B482E6"></path>
+      <path d="M9.94053 72C9.53133 72 9.12212 71.734 8.9789 71.3248L2.30882 53.0946C2.12468 52.5626 2.39066 51.9693 2.92263 51.7851C3.4546 51.601 4.04795 51.867 4.23209 52.3989L10.5339 69.6675L17.2653 67.2122L9.06074 44.7468L1.36765 47.5498C0.835676 47.734 0.242326 47.468 0.0581824 46.936C-0.125961 46.4041 0.140024 45.8107 0.671993 45.6266L9.32672 42.4757C9.85869 42.2915 10.452 42.5575 10.6362 43.0895L19.5569 67.4782C19.6592 67.7237 19.6387 68.0102 19.516 68.2557C19.3932 68.5012 19.1886 68.6854 18.9431 68.7877L10.2884 71.9386C10.1656 71.9795 10.0633 72 9.94053 72Z" fill="#B482E6"></path>
+    </svg>
+  );
+
+  const LiveIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 79 74" fill="none">
+      <path d="M45.8871 7.87286C42.0915 7.87286 39.0142 4.7956 39.0142 1C39.0142 4.7956 35.937 7.87286 32.1414 7.87286C35.937 7.87286 39.0142 10.9501 39.0142 14.7457C39.0142 12.8625 39.7714 11.154 40.9945 9.91142" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M24.4531 16.6094C20.6575 16.6094 17.5803 13.5322 17.5803 9.73657C17.5803 13.5322 14.503 16.6094 10.7074 16.6094C14.503 16.6094 17.5803 19.6867 17.5803 23.4823C17.5803 21.599 18.3374 19.8905 19.5606 18.648" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M14.7457 34.0828C10.9501 34.0828 7.87286 31.0056 7.87286 27.21C7.87286 31.0056 4.7956 34.0828 1 34.0828C4.7956 34.0828 7.87286 37.1601 7.87286 40.9557C7.87286 39.0724 8.63004 37.3639 9.85317 36.1214" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M77.0286 34.0828C73.233 34.0828 70.1557 31.0056 70.1557 27.21C70.1557 31.0056 67.0784 34.0828 63.2828 34.0828C67.0784 34.0828 70.1557 37.1601 70.1557 40.9557C70.1557 39.0724 70.9129 37.3639 72.136 36.1214" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M67.3212 16.6094C63.5256 16.6094 60.4483 13.5322 60.4483 9.73657C60.4483 13.5322 57.371 16.6094 53.5754 16.6094C57.371 16.6094 60.4483 19.6867 60.4483 23.4823C60.4483 21.599 61.2055 19.8905 62.4286 18.648" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M39.0144 53.5851C48.3966 53.5851 56.0024 45.9793 56.0024 36.5971C56.0024 27.2149 48.3966 19.6091 39.0144 19.6091C29.6322 19.6091 22.0264 27.2149 22.0264 36.5971C22.0264 45.9793 29.6322 53.5851 39.0144 53.5851Z" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M39.0143 19.6091C39.0143 28.9865 46.6152 36.5971 56.0023 36.5971C56.0023 27.2198 48.4014 19.6091 39.0143 19.6091Z" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M39.0144 19.6091C29.6273 19.6091 22.0264 27.2198 22.0264 36.5971C31.4135 36.5971 39.0144 28.9865 39.0144 19.6091Z" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M56.0023 56.41V36.5972" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M22.0264 36.5972V56.4586" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M34.646 53.0125V55.5267" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M43.3827 53.0125V55.5267" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M47.751 55.5266C47.751 60.3512 43.8389 64.2633 39.0143 64.2633C34.1897 64.2633 30.2776 60.3512 30.2776 55.5266" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M34.646 55.5266H25.9772C21.1138 55.5266 17.1726 59.4678 17.1726 64.3312V73H60.856V64.2051C60.856 59.4096 56.9731 55.5266 52.1776 55.5266H43.3827" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M43.3827 68.6316H52.1194" stroke="#FF7763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  );
+
   return (
-    <div className="table-container">
-      <h2 className="table-title">Compare Augmedix products</h2>
+    <div className="products-container">
+      <h3>Our Products</h3>
+      <div className="products-container1">
+      <div className="product-card">
+        <div className="product-header">
+          <h3 className="product-title">Augmedix Go</h3>
+          <GoIcon />
+        </div>
+        <p className="product-description">
+          A self-service, pure-AI scribe that drafts high-quality notes within moments. Great for clinicians that want help with documentation visits and want to do their own editing, coding, orders, referrals, and other post-visit EHR tasks.
+        </p>
+      </div>
 
-      <table className="comparison-table">
-        <thead>
-          <tr>
-            <th></th> {/* Empty column for feature names */}
-            <th className="green-text">Go <br /><span>Self-service</span></th>
-            <th className="purple-text">Assist <br /><span>Hybrid</span></th>
-            <th className="red-text">Live <br /><span>Full-service</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Daily EHR time savings</td>
-            <td>1 hour</td>
-            <td>1.5 - 2 hours</td>
-            <td>2 - 3 hours</td>
-          </tr>
-          <tr>
-            <td>Personalization</td>
-            <td>Some</td>
-            <td>More</td>
-            <td>Most</td>
-          </tr>
-          <tr>
-            <td>Produces AI-drafted notes within seconds</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>Web and mobile apps</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅</td>
-          </tr>
-          <tr>
-            <td>HITRUST certified & HIPAA compliant</td>
-            <td>✅</td>
-            <td>✅</td>
-            <td>✅</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="product-card">
+        <div className="product-header">
+          <h3 className="product-title">Augmedix Assist</h3>
+          <AssistIcon />
+        </div>
+        <p className="product-description">
+          Everything in Go plus additional support with editing AI-drafted notes, coding, orders, AVS, data entry, referral letters, and more. Notes are ready for sign-off within 1 hour.
+        </p>
+      </div>
+
+      <div className="product-card">
+        <div className="product-header">
+          <h3 className="product-title">Augmedix Live</h3>
+          <LiveIcon />
+        </div>
+        <p className="product-description">
+          Full clinical workflow support before, during, and after the visit performed by a dedicated medical documentation specialist who gets to know each clinician.
+        </p>
+      </div>
+</div>
+      <div className="table-container">
+        <h2 className="table-title">Compare Augmedix products</h2>
+        <table className="comparison-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th className="green-text">
+                <GoIcon />
+                <div>Go</div>
+                <span>Self-service</span>
+              </th>
+              <th className="purple-text">
+                <AssistIcon />
+                <div>Assist</div>
+                <span>Hybrid</span>
+              </th>
+              <th className="red-text">
+                <LiveIcon />
+                <div>Live</div>
+                <span>Full-service</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Daily EHR time savings</td>
+              <td>1 hour</td>
+              <td>1.5 - 2 hours</td>
+              <td>2 - 3 hours</td>
+            </tr>
+            <tr>
+              <td>Personalization</td>
+              <td>Some</td>
+              <td>More</td>
+              <td>Most</td>
+            </tr>
+            <tr>
+              <td>Produces AI-drafted notes within seconds</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>Web and mobile apps</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>HITRUST certified & HIPAA compliant</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

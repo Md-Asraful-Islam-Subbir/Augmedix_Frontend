@@ -1,115 +1,117 @@
+.header-slider-container {
+  position: relative;
+  overflow: hidden;
+  height: 80vh;
+  max-height: 800px;
+  background-color: #f8f9fa;
+}
+
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 33vw;
-    margin: 0px auto;
-    padding: 0 6vw;
-    background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80vh;
+  max-height: 800px;
+  padding: 0 8%;
+  box-sizing: border-box;
 }
 
 .header-contents {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5vw;
-    max-width: 80%;
-    animation: fadeIn 3s;
+  flex: 1;
+  max-width: 50%;
+  padding-right: 40px;
 }
 
-.header-contents h2 {
-    font-weight: 500;
-    color: black; /* Adjust based on your design */
-    font-size: max(4.5vw, 18px);
+.header-contents h1 {
+  font-size: 38rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #004bbb;
+  margin-bottom: 20px;
 }
 
 .header-contents p {
-    color: black; /* Adjust based on your design */
-    font-size: 1.5vw;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #070707;
+  margin-bottom: 30px;
+  max-width: 80%;
 }
 
-.header-contents button {
-    width: 200px;
-    border: none;
-    color: white;
-    font-weight: 500;
-    padding: 1vw 2.3vw;
-    background-color: blue;
-    font-size: max(1vw, 16px);
-    border-radius: .5rem;
-    cursor: pointer;
+.header-button {
+  background-color: #405bf2;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin-left: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.header-button:hover {
+  background-color: #3a3a3a;
+  transform: translateY(-2px);
+}
+
+.header-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-image {
-    max-width: 100%; /* Adjust based on your design */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  max-height: 500px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
-.header-image img {
-    width: 600px;
-    height: 450px;
-}
-@media (max-width: 1050px) {
-    .header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .header-contents {
-        max-width: 80%;
-        align-items: center; /* Center-align contents */
-    }
-
-    .header-image img {
-        width: 450px; /* Smaller image size */
-    }
-
-    .header-contents button {
-        width: 180px; /* Adjust button width */
-        padding: 0.8vw 2vw; /* Adjust padding */
-        font-size: 14px; /* Smaller font size */
-    }
+/* Slider adjustments */
+.slick-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 
-/* For screens smaller than 750px */
-@media (max-width: 750px) {
-    .header-contents p {
-        display: none;
-    }
-
-    .header-contents button {
-        width: 160px; /* Smaller button */
-        padding: 0.5vw 1.5vw;
-        font-size: 12px; /* Smaller font size */
-    }
-
-    .header-image img {
-        width: 300px; /* Adjust image size for mobile */
-        height: auto; /* Maintain aspect ratio */
-    }
+.slick-slider, .slick-list, .slick-track {
+  height: 100%;
 }
-@media (max-width: 630px) {
-    .header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin-left: 50px;
-    }
-    .header-contents p {
-        display: none;
-    }
 
-    .header-contents button {
-        width: 100px; /* Smaller button */
-        padding: 0.5vw 1.5vw;
-        font-size: 12px; /* Smaller font size */
-    }
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+    padding: 60px 5%;
+    height: auto;
+  }
+  
+  .header-contents {
+    max-width: 100%;
+    padding-right: 0;
+    margin-bottom: 40px;
+  }
+  
+  .header-contents p {
+    max-width: 100%;
+  }
+  
+  .header-image {
+    max-height: 350px;
+  }
+}
 
-    .header-image img {
-        width: 550px; /* Adjust image size for mobile */
-        height: auto; /* Maintain aspect ratio */
-    }
+@media (max-width: 768px) {
+  .header-contents h1 {
+    font-size: 2.2rem;
+  }
+  
+  .header-contents p {
+    font-size: 1rem;
+  }
 }

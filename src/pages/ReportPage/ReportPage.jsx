@@ -1,100 +1,594 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./ReportPage.css";
 
 const ReportPage = () => {
   const location = useLocation();
-  const { patient } = location.state || {};
+  const { patient, doctor } = location.state || {};
   const [documents, setDocuments] = useState([]);
   const [prescription, setPrescription] = useState("");
+  const [savedPrescriptions, setSavedPrescriptions] = useState([]);
+  const [editingPrescriptionId, setEditingPrescriptionId] = useState(null);
+  const [notes, setNotes] = useState("");
+  const [history, setHistory] = useState("");
+  const [examFindings, setExamFindings] = useState("");
   const mediaRecorderRef = useRef(null);
   const [audioUrl, setAudioUrl] = useState(null);
   const [recording, setRecording] = useState(false);
+  const [transcription, setTranscription] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [activeTab, setActiveTab] = useState("notes");
+  const [isLoading, setIsLoading] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [ehrSaved, setEhrSaved] = useState(false);
+  const [interimTranscription, setInterimTranscription] = useState("");
+  const recognitionRef = useRef(null);
 
-  if (!patient) {
-    return <h2>No Patient Selected</h2>;
-  }
+  useEffect(() => {
+    // Simulate initial data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      // Simulate initial patient data
+      if (patient) {
+        setHistory(patient.history || "No previous history available");
+      }
+    }, 800);
+
+    // Initialize speech recognition
+    if ('webkitSpeechRecognition' in window) {
+      recognitionRef.current = new window.webkitSpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = 'en-US';
+
+      recognitionRef.current.onresult = (event) => {
+        let interim = '';
+        let final = '';
+        
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            final += transcript + ' ';
+          } else {
+            interim += transcript;
+          }
+        }
+        
+        setInterimTranscription(interim);
+        if (final) {
+          setTranscription(prev => prev + final);
+        }
+      };
+
+      recognitionRef.current.onerror = (event) => {
+        console.error('Speech recognition error', event.error);
+        stopRecording();
+      };
+    }
+
+    return () => {
+      clearTimeout(timer);
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, [patient]);
+
+  useEffect(() => {
+    if (patient) {
+      // Reset states when patient changes
+      setDocuments([]);
+      setPrescription("");
+      setNotes("");
+      setExamFindings("");
+      setAudioUrl(null);
+      setRecording(false);
+      setTranscription("");
+      setInterimTranscription("");
+      setIsProcessing(false);
+      setImageLoaded(false);
+      setEhrSaved(false);
+    }
+  }, [patient]);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  const handleImageError = (e) => {
+    e.target.src = "/placeholder.jpg";
+    setImageLoaded(true);
+  };
+
+  const startRecording = async () => {
+    try {
+      // Start audio recording
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      let audioChunks = [];
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        audioChunks.push(event.data);
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        setAudioUrl(audioUrl);
+      };
+
+      mediaRecorderRef.current.start();
+      
+      // Start speech recognition
+      if (recognitionRef.current) {
+        recognitionRef.current.start();
+        setRecording(true);
+        setIsProcessing(true);
+        setTranscription("");
+        setInterimTranscription("");
+      } else {
+        alert("Speech recognition not supported in your browser");
+      }
+    } catch (err) {
+      console.error("Error accessing microphone:", err);
+      alert("Could not access microphone. Please check permissions.");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+    }
+    
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
+    
+    setRecording(false);
+    setIsProcessing(false);
+  };
+
+  const savePrescription = () => {
+    if (!prescription.trim()) return;
+    
+    const now = new Date();
+    const prescriptionData = {
+      id: Date.now(),
+      content: prescription,
+      date: now.toLocaleDateString(),
+      time: now.toLocaleTimeString(),
+      doctor: doctor?.[0]?.name || "Dr. Unknown",
+      datetime: now.toISOString()
+    };
+
+    if (editingPrescriptionId) {
+      // Update existing prescription
+      setSavedPrescriptions(prev =>
+        prev.map(p =>
+          p.id === editingPrescriptionId ? prescriptionData : p
+        )
+      );
+      setEditingPrescriptionId(null);
+    } else {
+      // Add new prescription
+      setSavedPrescriptions(prev => [prescriptionData, ...prev]);
+    }
+
+    setPrescription("");
+  };
+
+  const editPrescription = (id) => {
+    const prescriptionToEdit = savedPrescriptions.find(p => p.id === id);
+    if (prescriptionToEdit) {
+      setPrescription(prescriptionToEdit.content);
+      setEditingPrescriptionId(id);
+      setActiveTab("prescription");
+    }
+  };
+
+  const deletePrescription = (id) => {
+    setSavedPrescriptions(prev => prev.filter(p => p.id !== id));
+  };
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setDocuments((prevDocs) => [...prevDocs, URL.createObjectURL(file)]);
+      const newDocument = {
+        url: URL.createObjectURL(file),
+        name: file.name,
+        type: file.type.split('/')[1] || 'file',
+        size: (file.size / 1024).toFixed(2) + " KB",
+        date: new Date().toLocaleString()
+      };
+      setDocuments((prevDocs) => [...prevDocs, newDocument]);
     }
   };
 
-  const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorderRef.current = new MediaRecorder(stream);
-    let audioChunks = [];
-
-    mediaRecorderRef.current.ondataavailable = (event) => {
-      audioChunks.push(event.data);
+  const saveToEHR = () => {
+    const reportData = {
+      patientId: patient.id,
+      notes,
+      prescription,
+      history,
+      examFindings,
+      transcription,
+      documents: documents.map(doc => doc.name),
+      timestamp: new Date().toISOString()
     };
-
-    mediaRecorderRef.current.onstop = () => {
-      const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-      setAudioUrl(URL.createObjectURL(audioBlob));
-    };
-
-    mediaRecorderRef.current.start();
-    setRecording(true);
+    
+    // Simulate EHR API call
+    setTimeout(() => {
+      setEhrSaved(true);
+      setTimeout(() => setEhrSaved(false), 3000);
+    }, 1000);
   };
 
-  const stopRecording = () => {
-    mediaRecorderRef.current.stop();
-    setRecording(false);
+  const downloadTranscription = () => {
+    if (!transcription) return;
+    
+    const element = document.createElement("a");
+    const file = new Blob([transcription], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = `transcription_${patient.firstName}_${patient.lastName}_${new Date().toISOString().slice(0, 10)}.txt`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   };
+
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading patient data...</p>
+      </div>
+    );
+  }
+
+  if (!patient) {
+    return (
+      <div className="no-patient-container">
+        <h2 className="no-patient">No Patient Selected</h2>
+        <p>Please select a patient from the dashboard to view or create reports.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="report-page">
-      <h2>Patient Report</h2>
-      
-      {/* Patient Image */}
-      <div className="patient-image-container">
-        <img src={patient.image || "/placeholder.jpg"} alt="Patient" />
-      </div>
+      <header className="report-header">
+        <div className="header-content">
+          <h2>Patient Report Dashboard</h2>
+          <div className="patient-info-header">
+            <span className="patient-name">{patient.firstName} {patient.lastName}</span>
+            <span className="patient-id">ID: {patient.id || "N/A"}</span>
+          </div>
+        </div>
+      </header>
 
-      {/* Patient Information */}
-      <div className="patient-info">
-        <p><strong>Name:</strong> {patient.firstName} {patient.lastName}</p>
-        <p><strong>Phone:</strong> {patient.phone}</p>
-        <p><strong>Email:</strong> {patient.email}</p>
-        <p><strong>Procedure:</strong> {patient.procedure || "N/A"}</p>
-      </div>
+      <div className="report-content">
+        <aside className="patient-card">
+          <div className={`patient-image-container ${imageLoaded ? 'loaded' : 'loading'}`}>
+            <img 
+              src={patient.image || "/placeholder.jpg"} 
+              alt="Patient" 
+              className="patient-img"
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+            />
+            {!imageLoaded && <div className="image-placeholder"></div>}
+            <div className="patient-status">Active</div>
+          </div>
+          <h3>{patient.firstName} {patient.lastName}</h3>
+          <div className="patient-details">
+            <div className="detail-row">
+              <span className="detail-label">Age:</span>
+              <span>{patient.age || "N/A"}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Gender:</span>
+              <span>{patient.gender || "N/A"}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Phone:</span>
+              <span>{patient.phone || "N/A"}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Email:</span>
+              <span>{patient.email || "N/A"}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Last Visit:</span>
+              <span>{patient.lastVisit || "N/A"}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Procedure:</span>
+              <span>{patient.procedure || "N/A"}</span>
+            </div>
+          </div>
+          <div className="patient-actions">
+            <button className="view-history-btn">View Full History</button>
+          </div>
+        </aside>
 
-      {/* Document Upload */}
-      <div className="document-section">
-        <h3>Documents</h3>
-        <input type="file" onChange={handleFileUpload} />
-        <ul>
-          {documents.map((doc, index) => (
-            <li key={index}>
-              <a href={doc} target="_blank" rel="noopener noreferrer">View Document {index + 1}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
+        <main className="report-main">
+          <div className="tabs">
+            <button 
+              className={`tab-btn ${activeTab === "notes" ? "active" : ""}`}
+              onClick={() => setActiveTab("notes")}
+            >
+              Clinical Notes
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === "prescription" ? "active" : ""}`}
+              onClick={() => setActiveTab("prescription")}
+            >
+              Prescription
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === "history" ? "active" : ""}`}
+              onClick={() => setActiveTab("history")}
+            >
+              History
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === "exam" ? "active" : ""}`}
+              onClick={() => setActiveTab("exam")}
+            >
+              Exam Findings
+            </button>
+          </div>
 
-      {/* Voice Recorder */}
-      <div className="voice-recorder">
-        <h3>Voice Recorder</h3>
-        {recording ? (
-          <button onClick={stopRecording}>Stop Recording</button>
-        ) : (
-          <button onClick={startRecording}>Start Recording</button>
-        )}
-        {audioUrl && <audio controls src={audioUrl}></audio>}
-      </div>
+          {activeTab === "notes" && (
+            <section className="notes-section card">
+              <div className="section-header">
+                <h3>Clinical Notes</h3>
+                <div className="voice-recorder-controls">
+                  {recording ? (
+                    <button className="stop-btn" onClick={stopRecording}>
+                      Stop Recording
+                    </button>
+                  ) : (
+                    <button className="start-btn" onClick={startRecording}>
+                      Start Recording
+                    </button>
+                  )}
+                </div>
+              </div>
+              
+              {audioUrl && (
+                <div className="audio-player">
+                  <audio controls src={audioUrl}></audio>
+                </div>
+              )}
+              
+              {isProcessing && (
+                <div className="processing-indicator">
+                  <div className="spinner"></div>
+                  <p>Processing your recording...</p>
+                </div>
+              )}
+              
+              {(transcription || interimTranscription) && (
+                <div className="transcription-result">
+                  <div className="transcription-header">
+                    <h4>Voice Transcription</h4>
+                    {transcription && (
+                      <button 
+                        className="download-btn"
+                        onClick={downloadTranscription}
+                      >
+                        Download as Text
+                      </button>
+                    )}
+                  </div>
+                  <div className="transcription-text">
+                    {transcription}
+                    {interimTranscription && (
+                      <span className="interim-text">{interimTranscription}</span>
+                    )}
+                  </div>
+                  <div className="transcription-actions">
+                    <button 
+                      className="apply-btn"
+                      onClick={() => setNotes(transcription)}
+                    >
+                      Apply to Notes
+                    </button>
+                    <button 
+                      className="clear-btn"
+                      onClick={() => {
+                        setTranscription("");
+                        setInterimTranscription("");
+                      }}
+                    >
+                      Clear Transcription
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Enter clinical notes here or use voice recording..."
+                className="notes-textarea"
+              />
+            </section>
+          )}
 
-      {/* Prescription Writing */}
-      <div className="prescription-section">
-        <h3>Write Prescription</h3>
-        <textarea
-          value={prescription}
-          onChange={(e) => setPrescription(e.target.value)}
-          placeholder="Write prescription here..."
-        />
-        <button onClick={() => alert("Prescription Saved!")}>Save Prescription</button>
+          {activeTab === "prescription" && (
+            <section className="prescription-section card">
+              <h3>Prescription</h3>
+              <div className="medication-templates">
+                <h4>Common Medications</h4>
+                <div className="template-buttons">
+                  <button onClick={() => setPrescription(prev => prev + "\nIbuprofen 400mg - Take 1 tablet every 6 hours as needed for pain")}>
+                    Ibuprofen
+                  </button>
+                  <button onClick={() => setPrescription(prev => prev + "\nAmoxicillin 500mg - Take 1 capsule every 8 hours for 7 days")}>
+                    Amoxicillin
+                  </button>
+                  <button onClick={() => setPrescription(prev => prev + "\nLisinopril 10mg - Take 1 tablet daily for blood pressure")}>
+                    Lisinopril
+                  </button>
+                </div>
+              </div>
+              <textarea
+                value={prescription}
+                onChange={(e) => setPrescription(e.target.value)}
+                placeholder="Write prescription here..."
+                className="prescription-textarea"
+              />
+              <div className="prescription-actions">
+                <button 
+                  className="save-prescription-btn"
+                  onClick={savePrescription}
+                  disabled={!prescription.trim()}
+                >
+                  {editingPrescriptionId ? 'Update Prescription' : 'Save Prescription'}
+                </button>
+                {editingPrescriptionId && (
+                  <button 
+                    className="cancel-edit-btn"
+                    onClick={() => {
+                      setPrescription("");
+                      setEditingPrescriptionId(null);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+              
+              <div className="signature-line">
+                <span>{doctor?.[0]?.name}</span>
+              </div>
+
+              {savedPrescriptions.length > 0 && (
+                <div className="saved-prescriptions">
+                  <h4>Saved Prescriptions</h4>
+                  <div className="prescription-list">
+                    {savedPrescriptions.map((prescription) => (
+                      <div key={prescription.id} className="prescription-item">
+                        <div className="prescription-header">
+                          <span className="prescription-date">
+                            {prescription.date} at {prescription.time}
+                          </span>
+                          <div className="prescription-item-actions">
+                            <button 
+                              className="edit-btn"
+                              onClick={() => editPrescription(prescription.id)}
+                            >
+                              Edit
+                            </button>
+                            <button 
+                              className="delete-btn"
+                              onClick={() => deletePrescription(prescription.id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                        <div className="prescription-content">
+                          {prescription.content.split('\n').map((line, i) => (
+                            <p key={i}>{line}</p>
+                          ))}
+                        </div>
+                        <div className="prescription-footer">
+                          Prescribed by: {prescription.doctor}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
+          {activeTab === "history" && (
+            <section className="history-section card">
+              <h3>Patient History</h3>
+              <textarea
+                value={history}
+                onChange={(e) => setHistory(e.target.value)}
+                placeholder="Enter patient history including past medical history, family history, social history..."
+                className="history-textarea"
+              />
+            </section>
+          )}
+
+          {activeTab === "exam" && (
+            <section className="exam-section card">
+              <h3>Physical Exam Findings</h3>
+              <textarea
+                value={examFindings}
+                onChange={(e) => setExamFindings(e.target.value)}
+                placeholder="Enter physical examination findings..."
+                className="exam-textarea"
+              />
+            </section>
+          )}
+
+          <section className="documents-section card">
+            <div className="section-header">
+              <h3>Documents & Attachments</h3>
+              <label className="upload-btn">
+                <input 
+                  type="file" 
+                  onChange={handleFileUpload} 
+                  style={{ display: 'none' }} 
+                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                />
+                Upload Document
+              </label>
+            </div>
+            
+            {documents.length > 0 ? (
+              <div className="documents-grid">
+                {documents.map((doc, index) => (
+                  <div key={index} className="document-card">
+                    <div className={`document-icon ${doc.type}`}>
+                      {doc.type === 'pdf' ? '📄' : 
+                       doc.type === 'jpg' || doc.type === 'jpeg' || doc.type === 'png' ? '🖼️' : '📁'}
+                    </div>
+                    <div className="document-info">
+                      <div className="document-name">{doc.name}</div>
+                      <div className="document-meta">
+                        <span>{doc.type}</span>
+                        <span>{doc.size}</span>
+                        <span>{doc.date}</span>
+                      </div>
+                    </div>
+                    <a 
+                      href={doc.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="view-doc-btn"
+                    >
+                      View
+                    </a>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="no-documents">
+                <p>No documents uploaded yet</p>
+              </div>
+            )}
+          </section>
+
+          <div className="action-buttons">
+            <button className="save-draft-btn">Save Draft</button>
+            <button 
+              className={`save-ehr-btn ${ehrSaved ? 'saved' : ''}`} 
+              onClick={saveToEHR}
+              disabled={ehrSaved}
+            >
+              {ehrSaved ? 'Saved to EHR!' : 'Save to EHR'}
+            </button>
+          </div>
+        </main>
       </div>
     </div>
   );

@@ -74,7 +74,7 @@ const DoctorDashboard = () => {
           <li onClick={() => navigate("/doctor-appointments")}>
             <span>📅</span> Appointments
           </li>
-          <li onClick={() => navigate("/doctor-patients")}>
+          <li onClick={() => navigate("/doctor-patients",{ state: { doctor } })}>
             <span>👩‍⚕️</span> Patients
           </li>
           <li onClick={() => navigate("/doctor-messages")}>

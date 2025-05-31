@@ -6,6 +6,8 @@ import culture from './culture.svg'
 import growth from './growth.svg'
 import LeftArrow from './LeftArrow.svg'
 import header_img from './header_img.png'
+import header_img1 from './header_img1.png'
+import header_img2 from './header_img2.jpg'
 import Ex1 from './Ex1.png'
 import Ex2 from './Ex2.png'
 import Ex3 from './Ex3.png'
@@ -21,6 +23,8 @@ import appointment from './appointment.png'
 export const assets = {
     logo,
     header_img,
+    header_img1,
+    header_img2,
     Ex1,
     Ex2,
     Ex3,

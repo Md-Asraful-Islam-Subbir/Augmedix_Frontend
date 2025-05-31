@@ -36,7 +36,7 @@
     background-color: #fff4f2;
 }
 .btn-contact {
-    background-color: tomato;  /* White background */
+    background-color: #007BFF;  /* White background */
     color: white;           /* Blue text */
     border: 1px solid #49557e;/* Blue border */
     border-radius: 5px;       /* Rounds the corners */
@@ -46,7 +46,7 @@
   }
 
   .btn-contact:hover {
-    background-color: #007BFF; /* Blue background on hover */
+    background-color: tomato; /* Blue background on hover */
     color: white;             /* White text on hover */
   }
   .navbar-profile{

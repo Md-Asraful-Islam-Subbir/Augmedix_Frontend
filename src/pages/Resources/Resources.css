@@ -50,18 +50,13 @@
 }
 
 .read-more {
-    background: none;
-    border: 2px solid blue;
+    background-color: blue;
+    border: 2px solid black;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
     transition: 0.3s;
-}
-
-.read-more:hover {
-    background: blue;
-    color: white;
 }
 
 .logo img {
@@ -90,7 +85,8 @@
 }
 
 .tabs button {
-    background: none;
+    background: white;
+    color: black;
     border: 2px solid #ccc;
     padding: 10px 15px;
     font-size: 16px;
@@ -105,6 +101,8 @@
     color: white;
     border-color: blue;
 }
+
+
 
 /* Resource Grid */
 .resource-grid {
@@ -151,12 +149,13 @@
 }
 
 .resource-content .read-more {
-   
-    color: blue;
+   margin-left: 7rem;
+    background: blue;
+    color: white;
     font-weight: bold;
     text-decoration: none;
 }
 .resource-content .read-more:hover {
-    background: blue;
+    background: rgb(3, 3, 139);
     color: white;
 }

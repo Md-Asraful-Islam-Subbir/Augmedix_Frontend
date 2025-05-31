@@ -14,6 +14,8 @@ import DoctorPatients from './pages/DoctorPatients/DoctorPatients'
 import Appointment from './pages/Appointments/Appointments'
 import ViewAppointment from './pages/ViewAppointment/ViewAppointment'
 import ReportPage from './pages/ReportPage/ReportPage'
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 const App = () => {
   const [showLogin,setShowLogin]=useState(false)
