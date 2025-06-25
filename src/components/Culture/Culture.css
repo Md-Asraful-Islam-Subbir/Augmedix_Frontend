@@ -57,7 +57,7 @@
   .card2 p {
     font-size: 20px;
     color: #666;
-    line-height: 1.5;
+    line-height: 1.5; text-align: left;
   }
   .card3 {
     flex: 1 1 45%; 
@@ -94,7 +94,7 @@
   .card3 p {
     font-size: 20px;
     color: #666;
-    line-height: 1.5;
+    line-height: 1.5; text-align: left;
   }
 
 .arrow {

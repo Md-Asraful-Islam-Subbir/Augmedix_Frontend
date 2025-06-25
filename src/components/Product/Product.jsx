@@ -42,7 +42,7 @@ const Product = () => {
 
   return (
     <div className="products-container">
-      <h3>Our Products</h3>
+      <h2>Our Products</h2>
       <div className="products-container1">
       <div className="product-card">
         <div className="product-header">
@@ -118,6 +118,24 @@ const Product = () => {
             </tr>
             <tr>
               <td>Web and mobile apps</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>HITRUST certified & HIPAA compliant</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>HITRUST certified & HIPAA compliant</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>HITRUST certified & HIPAA compliant</td>
               <td>✅</td>
               <td>✅</td>
               <td>✅</td>

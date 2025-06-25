@@ -1,12 +1,14 @@
 import React from 'react'
 import './ProductOverview.css'
 import Product from '../../components/Product/Product'
+import ContactSection from '../../components/ContactSection/ContactSection'
+import AugmedixAIEngine from '../../components/Product/AugmedixAIEngine'
 function ProductOverview() {
   return (
     <div>
     <div className="container">
       <h1 className="title">
-        Versatile <span className="highlight">AI solutions</span> for every clinical occasion
+        Versatile <span className="highlight1">AI solutions</span> for every clinical occasion
       </h1>
       <p className="description">
         Augmedix gives your organization the ability to provide different levels of AI automation 
@@ -14,6 +16,8 @@ function ProductOverview() {
       </p>
     </div>
     <Product/>
+    <AugmedixAIEngine/>
+<ContactSection/>
     </div>
   )
 }

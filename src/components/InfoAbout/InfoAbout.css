@@ -49,7 +49,7 @@
   font-size: 22px; 
   line-height: 1.8;
   color: #555;
-  animation: fadeIn 2s ease-in-out;
+  animation: fadeIn 2s ease-in-out; text-align: left;
 }
 
 

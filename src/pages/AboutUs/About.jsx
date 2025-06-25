@@ -1,9 +1,10 @@
 import React from 'react';
 import './About.css';
 import { assets } from '../../assets/assets';
-
+import ContactSection from '../../components/ContactSection/ContactSection'
 const About = () => {
   return (
+    <div>
     <div className="page-container">
       <div className="content-wrapper">
         <div className="grid-container">
@@ -125,6 +126,9 @@ const About = () => {
           </div>
         </div>
       </div>
+    </div>
+    <br /> <br />
+    <ContactSection/>
     </div>
   );
 };

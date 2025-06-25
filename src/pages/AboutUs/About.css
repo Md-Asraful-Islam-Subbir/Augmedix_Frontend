@@ -40,6 +40,7 @@
     color: #4b5563;
     font-size: 22px;
     margin-bottom: 16px;
+    text-align: left;
   }
   
 
@@ -162,7 +163,9 @@
   margin-bottom: 1rem;
   color: #1d4ed8;
 }
-
+.value-content p {
+  text-align: left;
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .value-row, 

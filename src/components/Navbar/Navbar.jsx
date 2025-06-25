@@ -62,11 +62,20 @@ const Navbar = ({ setShowLogin }) => {
             </ul>
           </div>
         )}
-        {userType !== "Admin" && (
-          <button className="btn-contact" onClick={() => navigate("/appointment-form")}>
-            Contact Us
-          </button>
-        )}
+       {userType !== "Admin" && (
+  <button
+    className="btn-contact"
+    onClick={() => {
+      if (token) {
+        navigate("/appointment-form");
+      } else {
+        navigate("/contact");
+      }
+    }}
+  >
+    Contact Us
+  </button>
+)}
       </div>
     </div>
   );

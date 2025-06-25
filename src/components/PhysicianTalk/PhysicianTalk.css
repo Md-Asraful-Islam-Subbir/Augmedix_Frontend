@@ -40,10 +40,11 @@
     color: black;
   }
   
-  .description {
-    color: #4b5563;
+  .grid-container .description {
+    color: #4b5563 !important;
     font-size: 22px;
-    margin-bottom: 16px;
+    margin-bottom: 16px; 
+    text-align: left;
   }
   
   .explore-button {
@@ -103,7 +104,7 @@
   .testimonial-text {
     font-size: 35px;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 10px; text-align: left;
   }
   
   .testimonial-author {

@@ -25,7 +25,7 @@ const Footer = () => {
           <div className="footer-column">
             <h4 className="footer-heading">Contact Us</h4>
             <ul className="footer-links">
-              <li>(888) 669 4885</li>
+              <li>(880) 187 8507129</li>
               <li>info@augmedix.com</li>
             </ul>
             <button className="footer-button">Contact Us</button>

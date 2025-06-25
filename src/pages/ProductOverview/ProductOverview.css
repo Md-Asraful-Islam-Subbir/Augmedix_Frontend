@@ -18,25 +18,25 @@
   }
   
   /* Main heading */
-.title {
+.container .title {
   font-size: 95px;
   font-weight: 700;
-  color: black !important; /* Make the entire title black */
+  color: black !important;
   line-height: 1.2;
   max-width: 1000px;
 }
 
 /* Highlighted AI solutions text */
-.highlight {
-  color: #2563eb; /* Blue color for the highlight text */
+.container .highlight1 {
+  color: #2563eb !important; /* Blue color for the highlight text */
   font-size: 72px;
   font-weight: 700;
   position: relative;
 }
 
 /* Sparkle effect */
-.highlight::after {
-  content: " ✨";
+.highlight1::after {
+  content: " ✨" !important;
   font-size: 24px;
   position: absolute;
   top: -10px;
@@ -44,9 +44,9 @@
 }
 
   /* Description text */
-  .description {
+  .container .description {
     font-size: 22px;
-    color: #555;
+    color: #555 !important;
     max-width: 800px;
     margin-top: 20px;
   }

@@ -20,6 +20,8 @@ import cross_icon from './cross_icon.png'
 import profile_icon from './profile_icon.png'
 import logout_icon from './logout_icon.png'
 import appointment from './appointment.png'
+import capture from './Capture.PNG'
+import contactImage from './contact.jpg'
 export const assets = {
     logo,
     header_img,
@@ -43,4 +45,6 @@ export const assets = {
     profile_icon,
     logout_icon,
     appointment,
+    capture,
+    contactImage,
 }

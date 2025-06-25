@@ -4,6 +4,10 @@
   padding: 50px 10%;
   background-color: #f8f8f8;
 }
+.products-container h2{
+   text-align: center;
+   background-color: #f7f7f7;
+}
 .products-container1 {
   width: 1000px;
   padding: 50px 10%;
@@ -42,7 +46,6 @@
   height: 60px;
   object-fit: contain;
 }
-
 .product-description {
   font-size: 20px;
   line-height: 1.6;
@@ -54,7 +57,10 @@
 .table-container {
   margin-top: 50px;
 }
-
+.table-container h2{
+  padding: 20px 0;
+  margin-top: -2rem;
+}
 .table-title {
   font-size: 40px;
   font-weight: bold;
@@ -71,10 +77,12 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.comparison-table thead tr {
+.comparison-table .thead .tr {
   background-color: #f8f8f8;
 }
-
+.comparison-table tr{
+  height: 10rem;
+}
 .comparison-table th {
   padding: 20px;
   font-size: 20px;
@@ -104,7 +112,7 @@
 /* Table body */
 .comparison-table td {
   padding: 20px;
-  font-size: 16px;
+  font-size: 20px;
   border-top: 1px solid #ddd;
 }
 
