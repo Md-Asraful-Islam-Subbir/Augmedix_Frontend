@@ -122,7 +122,7 @@ const About = () => {
 
           {/* Right Side - Image */}
           <div className="image-container">
-            <img src={assets.Prompt2} alt="Career at Augmedix" className="image" />
+            <img src={assets.Prompt2} alt="Career at Augmedix" className="image1" />
           </div>
         </div>
       </div>
