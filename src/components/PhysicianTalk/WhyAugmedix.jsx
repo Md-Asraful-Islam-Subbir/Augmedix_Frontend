@@ -7,7 +7,7 @@ const WhyAugmedix = () => {
     <section className="why-augmedix">
       <div className="top-section">
         <h2 className="left-heading">Why Augmedix?</h2>
-        <p className="right-paragraph">
+        <p className="right-paragraph1">
           In 2013 Augmedix became the first to deliver ambient medical documentation to health systems, hospitals and clinics.
           A decade and 10 million notes later, we’ve learned a few things about what healthcare enterprises need.
         </p>

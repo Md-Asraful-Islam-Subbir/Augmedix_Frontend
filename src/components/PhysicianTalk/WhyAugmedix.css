@@ -25,7 +25,8 @@
   text-align: left;
 }
 
-.right-paragraph {
+.right-paragraph1 {
+  color: white;
   flex: 2;
   font-size: 20px;
   line-height: 1.6;

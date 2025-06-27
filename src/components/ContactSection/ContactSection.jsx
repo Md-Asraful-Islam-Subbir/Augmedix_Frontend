@@ -59,7 +59,7 @@ const ContactSection = () => {
     </div>
   </div>
 
-  <button type="submit" className="submit-btn">Submit</button>
+  <button type="submit" className="submit-btn1">Submit</button>
 </div>
         </form>
         

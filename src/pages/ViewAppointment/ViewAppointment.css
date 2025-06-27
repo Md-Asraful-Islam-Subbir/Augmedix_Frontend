@@ -1,21 +1,55 @@
 .view-appointment-container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .appointment-item {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #fff;
-  }
-  
-  .error {
-    color: red;
-  }
-  
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.view-appointment-container h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.appointment-item {
+  background: #f7f9fc;
+  border-left: 5px solid #3498db;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: 0.3s ease;
+}
+
+.appointment-item:hover {
+  background-color: #eaf2fb;
+}
+
+.appointment-item p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #34495e;
+}
+
+.appointment-item strong {
+  color: #2c3e50;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 18px;
+}

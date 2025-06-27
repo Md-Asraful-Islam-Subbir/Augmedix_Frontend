@@ -176,51 +176,55 @@ const Appointment = () => {
       alert("An error occurred while saving the serial number. Please try again.");
     }
   };
-  const handleConfirm = async (appt) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("You must be logged in to confirm the patient.");
-      return;
+ const handleConfirm = async (appt) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("You must be logged in to confirm the patient.");
+    return;
+  }
+
+  const serialNumber = serialNumbers[appt._id] || "N/A";
+
+  try {
+    const response = await fetch("http://localhost:4000/api/patients", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        firstName: appt.firstName,
+        lastName: appt.lastName,
+        phone: appt.phone,
+        email: appt.email,
+        address: appt.address,
+        city: appt.city,
+        state: appt.state,
+        zip: appt.zip,
+        gender: appt.gender,
+        department: appt.department,
+        doctor: appt.doctor,
+        procedure: appt.procedure,
+        appointmentDate: appt.appointmentDate,
+        appointmentTime: appt.appointmentTime,
+        serialNumber: serialNumber
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const patientId = data.patient._id;
+      alert(`Patient confirmed and email sent! ID: ${patientId}`);
+    } else {
+      const errorData = await response.json();
+      alert(`Error confirming patient: ${errorData.error || "Unknown error"}`);
     }
-  
-    try {
-      const response = await fetch("http://localhost:4000/api/patients", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          firstName: appt.firstName,
-          lastName: appt.lastName,
-          phone: appt.phone,
-          email: appt.email,
-          address: appt.address,
-          city: appt.city,
-          state: appt.state,
-          zip: appt.zip,
-          gender: appt.gender,
-          department: appt.department,
-          doctor: appt.doctor,
-          procedure: appt.procedure,
-          appointmentDate: appt.appointmentDate,
-          appointmentTime: appt.appointmentTime,
-        }),
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        const patientId = data.patient._id; // The MongoDB generated _id
-        alert(`Patient confirmed! ID: ${patientId}`);
-      } else {
-        const errorData = await response.json();
-        alert(`Error confirming patient: ${errorData.error || "Unknown error"}`);
-      }
-    } catch (error) {
-      console.error("Error confirming patient:", error);
-      alert("An error occurred while confirming the patient.");
-    }
-  };
+  } catch (error) {
+    console.error("Error confirming patient:", error);
+    alert("An error occurred while confirming the patient.");
+  }
+};
+
   
   return (
     <div className="appointment-container">

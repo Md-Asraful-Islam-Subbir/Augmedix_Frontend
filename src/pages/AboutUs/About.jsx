@@ -18,7 +18,7 @@ const About = () => {
             </p>
           </div>
           <div className="image-container1">
-            <img src={assets.Prompt} alt="" className="image" />
+            <img src={assets.Prompt} alt="" className="image1" />
           </div>
         </div>
 

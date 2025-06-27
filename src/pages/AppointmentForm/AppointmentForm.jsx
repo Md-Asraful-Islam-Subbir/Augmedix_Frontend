@@ -85,11 +85,11 @@ const AppointmentForm = () => {
   };
 
   return (
-    <div className="contact-container">
+    <div className="contact-container1">
       <h2>Doctor Appointment Request Form</h2>
       <p>Fill out the form below, and we will contact you to confirm your appointment.</p>
 
-      <form onSubmit={handleSubmit} className="contact-form">
+      <form onSubmit={handleSubmit} className="contact-form1">
         <div className="form-group">
           <label htmlFor="firstName">First Name</label>
           <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
