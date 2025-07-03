@@ -193,12 +193,22 @@ body {
 }
 
 .card {
+  width: 900px;
+  align-self: stretch;
   background: var(--card-bg);
   padding: 1.5rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
-
+.card1 {
+  margin-top: 10rem;
+  width: 900px;
+  align-self: stretch;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -728,4 +738,57 @@ audio {
 
 .transcription-actions {
   margin-top: 10px;
+}
+
+/* AI Button Styles */
+.ai-analyze-btn {
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.ai-analyze-btn:hover {
+  background-color: #357ab7;
+}
+
+/* AI Output Box */
+.ai-output {
+  background-color: #f7f9fc;
+  border-left: 4px solid #4a90e2;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 6px;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap;
+  color: #333;
+}
+.structured-summary {
+  background-color: #f1f5f9;
+  border-left: 4px solid var(--info-color);
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: var(--border-radius);
+  line-height: 1.6;
+}
+
+.structured-summary p {
+  margin: 0.5rem 0;
+}
+.analysis-section {
+  margin-top: 1.5rem;
+  /* no fixed height */
+}
+
+.analysis-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0f4f8;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  white-space: normal;
 }

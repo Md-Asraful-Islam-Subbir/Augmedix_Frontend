@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./ReportPage.css";
-
+import History from "../../pages/ReportPage/History";
 const ReportPage = () => {
   const location = useLocation();
   const { patient, doctor } = location.state || {};
@@ -23,6 +23,8 @@ const ReportPage = () => {
   const [ehrSaved, setEhrSaved] = useState(false);
   const [interimTranscription, setInterimTranscription] = useState("");
   const recognitionRef = useRef(null);
+const [analysisResult, setAnalysisResult] = useState(null);
+const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
     // Simulate initial data loading
@@ -191,38 +193,73 @@ const ReportPage = () => {
     setSavedPrescriptions(prev => prev.filter(p => p.id !== id));
   };
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const newDocument = {
-        url: URL.createObjectURL(file),
-        name: file.name,
-        type: file.type.split('/')[1] || 'file',
-        size: (file.size / 1024).toFixed(2) + " KB",
-        date: new Date().toLocaleString()
-      };
-      setDocuments((prevDocs) => [...prevDocs, newDocument]);
-    }
+  // In your ReportPage component
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const newDocument = {
+      _id: Date.now().toString(), // Add unique ID
+      url: URL.createObjectURL(file),
+      name: file.name,
+      type: file.type.split("/")[1] || "file",
+      size: (file.size / 1024).toFixed(2) + " KB",
+      date: new Date().toLocaleString(),
+      mimetype: file.type
+    };
+    setDocuments((prevDocs) => [...prevDocs, newDocument]);
+  }
+};
+
+const saveToEHR = async () => {
+  const reportData = {
+    patientId: patient._id || patient.id,
+    patientName: `${patient.firstName} ${patient.lastName}`,
+    doctorName: doctor?.[0]?.name || "Unknown Doctor",
+    image: patient.image,
+    phone: patient.phone,
+    email: patient.email,
+    age: patient.age,
+    gender: patient.gender,
+    lastVisit: patient.lastVisit,
+    procedure: patient.procedure,
+    notes,
+    history,
+    examFindings,
+    transcription,
+    audioUrl,
+    prescriptions: savedPrescriptions,
+    documents: documents.map(doc => ({
+      name: doc.name,
+      type: doc.type,
+      size: doc.size,
+      date: doc.date,
+      url: doc.url,
+    })),
+    analysisResult: analysisResult ? {
+      input: transcription,
+      result: analysisResult.answer
+    } : null
   };
 
-  const saveToEHR = () => {
-    const reportData = {
-      patientId: patient.id,
-      notes,
-      prescription,
-      history,
-      examFindings,
-      transcription,
-      documents: documents.map(doc => doc.name),
-      timestamp: new Date().toISOString()
-    };
-    
-    // Simulate EHR API call
-    setTimeout(() => {
+  try {
+    const res = await fetch("http://localhost:4000/api/report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reportData)
+    });
+
+    if (res.ok) {
       setEhrSaved(true);
+      alert("✅ Report successfully saved to EHR!");
       setTimeout(() => setEhrSaved(false), 3000);
-    }, 1000);
-  };
+    } else {
+      throw new Error("Save failed");
+    }
+  } catch (err) {
+    console.error("Save to EHR failed", err);
+    alert("❌ Failed to save report to EHR.");
+  }
+};
 
   const downloadTranscription = () => {
     if (!transcription) return;
@@ -235,6 +272,27 @@ const ReportPage = () => {
     element.click();
     document.body.removeChild(element);
   };
+const analyzeTranscription = async () => {
+  if (!transcription.trim()) return;
+  setIsAnalyzing(true);
+  try {
+    const response = await fetch("http://localhost:4000/api/gpt", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: transcription }),
+    });
+
+    if (!response.ok) throw new Error("Failed to analyze transcription");
+
+    const data = await response.json();
+    setAnalysisResult(data);
+  } catch (err) {
+    console.error("Analysis error:", err);
+    alert("Failed to analyze transcription");
+  } finally {
+    setIsAnalyzing(false);
+  }
+};
 
   if (isLoading) {
     return (
@@ -407,7 +465,22 @@ const ReportPage = () => {
                   </div>
                 </div>
               )}
-              
+              {transcription && (
+  <div className="analysis-section">
+    <button className="analyze-btn" onClick={analyzeTranscription} disabled={isAnalyzing}>
+      {isAnalyzing ? "Analyzing..." : "Analyze with AI"}
+    </button>
+
+  {analysisResult && (
+  <div className="analysis-result">
+    <h4>AI Medical Insight</h4>
+    <p>{analysisResult.answer}</p>
+  </div>
+)}
+
+  </div>
+)}
+
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
@@ -507,16 +580,8 @@ const ReportPage = () => {
           )}
 
           {activeTab === "history" && (
-            <section className="history-section card">
-              <h3>Patient History</h3>
-              <textarea
-                value={history}
-                onChange={(e) => setHistory(e.target.value)}
-                placeholder="Enter patient history including past medical history, family history, social history..."
-                className="history-textarea"
-              />
-            </section>
-          )}
+  <History history={history} setHistory={setHistory} />
+)}
 
           {activeTab === "exam" && (
             <section className="exam-section card">
@@ -530,7 +595,7 @@ const ReportPage = () => {
             </section>
           )}
 
-          <section className="documents-section card">
+          <section className="documents-section card1">
             <div className="section-header">
               <h3>Documents & Attachments</h3>
               <label className="upload-btn">

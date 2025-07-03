@@ -57,23 +57,47 @@
   .content {
     flex-direction: column;
     gap: 20px;
+    padding: 16px;
   }
 
   .video-container,
   .text-container {
-    max-width: 100%; 
-  }
-
-  .video {
-    width: 600px;
-    height: 300px; 
+    max-width: 100%;
   }
 
   .section-heading {
-    font-size: 32px; 
+    font-size: 32px;
   }
 
   .about-text {
-    font-size: 20px; 
+    font-size: 20px;
+    text-align: justify;
+  }
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+  .video {
+    aspect-ratio: 16/9;
+    height: auto;
+  }
+
+  .section-heading {
+    font-size: 28px;
+  }
+
+  .about-text {
+    font-size: 18px;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 480px) {
+  .section-heading {
+    font-size: 24px;
+  }
+
+  .about-text {
+    font-size: 16px;
   }
 }

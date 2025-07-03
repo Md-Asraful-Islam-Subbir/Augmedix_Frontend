@@ -110,4 +110,58 @@
     border-top: 1px solid #ccc; 
     margin-top: 20px; /* Space before the line */
   }
-    
+
+  @media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-sections {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-column {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .footer-logo img {
+    max-width: 180px;
+  }
+
+  .footer-disclaimer {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .footer-certifications {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .footer-button {
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .footer-heading {
+    font-size: 14px;
+  }
+
+  .footer-links li {
+    font-size: 13px;
+  }
+
+  .footer-certifications {
+    gap: 10px;
+  }
+
+  .cert-logo {
+    max-width: 100px;
+  }
+}

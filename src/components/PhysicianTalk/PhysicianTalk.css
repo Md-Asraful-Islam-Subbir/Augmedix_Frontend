@@ -4,12 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+  box-sizing: border-box;
   }
   
   .content-wrapper {
     max-width: 1200px;
     padding: 16px;
     width: 100%;
+    box-sizing: border-box;
   }
   
   .grid-container {
@@ -37,7 +40,7 @@
   }
   
   .subtitle {
-    color: black;
+    color: black !important;
   }
   
   .grid-container .description {
@@ -48,7 +51,7 @@
   }
   
   .explore-button {
-    width: 200px;
+    width: fit-content;
     padding: 12px 24px;
     background-color: white;
     color: #1d4ed8;
@@ -68,18 +71,21 @@
   .image-container {
     display: flex;
     justify-content: center;
-    background-color: #da0d0d;
+   align-items: center;
+  background-color: transparent;
   }
   
   .image {
     max-width: 100%;
-    height: 800px;
+     max-height: 500px;
+  object-fit: cover;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .testimonials-section {
     margin-top: 50px;
+    padding: 0 16px;
   }
   
   .testimonials-title {
@@ -107,6 +113,7 @@
     font-size: 35px;
     color: #333;
     margin-bottom: 10px; text-align: left;
+  text-align: left;
   }
   
   .testimonial-author {
@@ -130,5 +137,29 @@
     color: #1d4ed8; 
     font-weight: bold; 
     font-size: 40px; 
+    text-align: center;
   }
-  
+  @media (max-width: 768px) {
+  .title {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .grid-container .description {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .image {
+    max-height: 300px;
+  }
+
+  .explore-button {
+    margin: 0 auto;
+  }
+}

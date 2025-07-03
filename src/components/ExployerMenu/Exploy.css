@@ -50,16 +50,16 @@
 /* For mobile devices */
 @media (max-width: 750px) {
     .exploy-container {
-        margin-top: 200px; /* Further adjust margin */
+        margin-top: 10px; /* Further adjust margin */
     }
 
     .exploymenulist {
         flex-direction: column; /* Stack images vertically */
-        gap: 20px; /* Reduce the gap further */
+        gap: 10px; /* Reduce the gap further */
     }
 
     .exploy-image {
-        width: 100px; /* Even smaller images for mobiles */
+        width: 200px; /* Even smaller images for mobiles */
         height: 30px; 
     }
 }

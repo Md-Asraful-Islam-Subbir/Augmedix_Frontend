@@ -158,7 +158,7 @@ useEffect(() => {
                 <button>Click</button>
               </td>
               <td>
-                <button onClick={() => navigate("/report", { state: { patient, doctor } })}>Reports</button>
+                <button onClick={() => navigate("/report", { state: {  patient: { ...patient, id: patient._id }, doctor } })}>Reports</button>
               </td>
               <td>
                 <button className="view-button" onClick={() => setSelectedPatient(patient)}>

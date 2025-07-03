@@ -139,6 +139,32 @@
 @media (max-width: 480px) {
   .login-popup-container,
   .forgot-password-container {
-    padding: 24px;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 20px;
+  }
+
+  .login-popup-title h2,
+  .forgot-password-title h2 {
+    font-size: 20px;
+  }
+
+  .login-popup-inputs input,
+  .forgot-password-inputs input,
+  .login-popup-role select {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .login-popup-container button,
+  .forgot-password-container button {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .login-popup p,
+  .forgot-password-popup p {
+    font-size: 13px;
   }
 }
+
