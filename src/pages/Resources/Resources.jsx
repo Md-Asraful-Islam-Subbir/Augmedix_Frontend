@@ -23,9 +23,9 @@ const Resources = () => {
     const tabs = ["All", "News", "Media Mentions", "Press Releases", "Blogs", "Case Studies", "Webinars"];
 
     const resourceData = [
-        { id: 1, category: "Case Studies",date: "January 29, 2025", title: "Reclaiming Work-Life Balance", description: "Learn how Dr. Lamberty achieved a better work-life balance by using Augmedix Go to enhance patient care and simplify medical documentation.", image: assets.logo3 },
-        { id: 2, category: "Media Mentions", date: "January 13, 2025", title: "Augmedix Awarded Vizient Contract", description: "Augmedix, a Commure company, has secured a contract with Vizient, the nation’s largest provider-driven healthcare performance improvement company.", image: assets.logo1 },
-        { id: 3, category: "Press Releases", date: "January 13, 2025", title: "Augmedix Awarded Vizient Contract", description: "Augmedix and Vizient to offer Augmedix Go, Augmedix Assist, and Augmedix Live for diverse group of providers and health systems across the United States.", image: assets.logo2 },
+        { id: 1, category: "Case Studies",date: "January 29, 2025", title: "Reclaiming Work-Life Balance", description: "Learn how Dr. Lamberty achieved a better work-life balance by using ClinixNote Go to enhance patient care and simplify medical documentation.", image: assets.logo3 },
+        { id: 2, category: "Media Mentions", date: "January 13, 2025", title: "ClinixNote Awarded Vizient Contract", description: "ClinixNote, a Commure company, has secured a contract with Vizient, the nation’s largest provider-driven healthcare performance improvement company.", image: assets.logo1 },
+        { id: 3, category: "Press Releases", date: "January 13, 2025", title: "ClinixNote Awarded Vizient Contract", description: "ClinixNote and Vizient to offer ClinixNote Go, ClinixNote Assist, and ClinixNote Live for diverse group of providers and health systems across the United States.", image: assets.logo2 },
     ];
 
     const filteredResources = activeTab === "All" ? resourceData : resourceData.filter(item => item.category === activeTab);
@@ -39,15 +39,15 @@ const Resources = () => {
                         <div className="press-content">
                             <div className="text">
                                 <p className="date">PRESS RELEASES / OCTOBER 2, 2024</p>
-                                <h1>Commure Completes Merger with Augmedix</h1>
+                                <h1>Commure Completes Merger with ClinixNote</h1>
                                 <p className="description">
                                     Commure, a healthcare technology company, announced today that it has completed the acquisition 
-                                    of Augmedix. Augmedix will now operate as a wholly-owned subsidiary of Commure.
+                                    of ClinixNote. ClinixNote will now operate as a wholly-owned subsidiary of Commure.
                                 </p>
                                 <button className="read-more">Read More</button>
                             </div>
                             <div className="logo">
-                                <img src={assets.logo3} alt="Augmedix Logo" />
+                                <img src={assets.logo3} alt="ClinixNote Logo" />
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ const Resources = () => {
                                 <p className="date">PRESS RELEASES / OCTOBER 10, 2024</p>
                                 <h1>New AI Healthcare Innovation</h1>
                                 <p className="description">
-                                    Augmedix launches a new AI-driven healthcare assistant, improving documentation and patient care.
+                                    ClinixNote launches a new AI-driven healthcare assistant, improving documentation and patient care.
                                 </p>
                                 <button className="read-more">Read More</button>
                             </div>

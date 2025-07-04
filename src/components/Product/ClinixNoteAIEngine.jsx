@@ -1,10 +1,10 @@
 import React from 'react';
-import './AugmedixAIEngine.css';
+import './ClinixNoteAIEngine.css';
 
-const AugmedixAIEngine = () => {
+const ClinixNoteAIEngine = () => {
   return (
     <div className="ai-engine-container">
-      <h1 className="main-title">The Augmedix Clinical AI Engine</h1>
+      <h1 className="main-title">The ClinixNote Clinical AI Engine</h1>
       
       <div className="process-flow">
         <div className="process-step">
@@ -20,7 +20,7 @@ const AugmedixAIEngine = () => {
         <div className="process-step">
           <div className="step-icon">2</div>
           <div className="step-content">
-            <h3>Augmedix Natural Language Processing (NLP)</h3>
+            <h3>ClinixNote Natural Language Processing (NLP)</h3>
             <p>including foundational and specialty-specific fine-tuned Large Language Models (LLMs), make multiple passes to generate a natural-sounding note.</p>
           </div>
         </div>
@@ -49,4 +49,4 @@ const AugmedixAIEngine = () => {
   );
 };
 
-export default AugmedixAIEngine;
+export default ClinixNoteAIEngine;

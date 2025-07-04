@@ -26,7 +26,7 @@ const About = () => {
         <section className="core-values-section" id="career">
           <div className="core-values-container">
             <div className="core-values-header">
-              <h2 className="section-heading">Augmedix core values</h2>
+              <h2 className="section-heading">ClinixNote core values</h2>
               <p>
                 These are some of the values we live by, as a company. We work by them, too: we're building a platform and products we believe in — knowing there is real value to be gained from helping people, wherever they are, simplify whatever it is that they do and bring more of themselves to their work.
               </p>
@@ -36,7 +36,7 @@ const About = () => {
             <div className="value-row">
               <div className="value-image">
                 <img 
-                  src="https://augmedix.com.bd/wp-content/uploads/2020/06/Do-work-that-matter.png" 
+                  src="https://Augmedix.com.bd/wp-content/uploads/2020/06/Do-work-that-matter.png" 
                   alt="Do work that matters" 
                   className="img-fluid" 
                 />
@@ -44,7 +44,7 @@ const About = () => {
               <div className="value-content">
                 <h3 className="section-subheading">Do work that matters</h3>
                 <p>
-                  Augmedix is a mission-driven company set on a course to improve the lives of doctors, to improve the care patients receive, and to create high-value jobs in countries that need them most. We take ownership of what we do and we're driven to make an impact. When something needs to get done, we don't wait for someone else to take the lead, we roll up our sleeves and get it done.
+                  ClinixNote is a mission-driven company set on a course to improve the lives of doctors, to improve the care patients receive, and to create high-value jobs in countries that need them most. We take ownership of what we do and we're driven to make an impact. When something needs to get done, we don't wait for someone else to take the lead, we roll up our sleeves and get it done.
                 </p>
               </div>
             </div>
@@ -53,7 +53,7 @@ const About = () => {
             <div className="value-row reverse">
               <div className="value-image">
                 <img 
-                  src="https://augmedix.com.bd/wp-content/uploads/2020/06/Collaborate-first-escalate-later.png" 
+                  src="https://Augmedix.com.bd/wp-content/uploads/2020/06/Collaborate-first-escalate-later.png" 
                   alt="Collaborate first escalate later" 
                   className="img-fluid" 
                 />
@@ -61,7 +61,7 @@ const About = () => {
               <div className="value-content">
                 <h3 className="section-subheading">Collaborate first escalate later</h3>
                 <p>
-                  Stop. Collaborate and listen. We are #OneAugmedix and we pride ourselves on working together to solve problems before sounding the alarm. We believe in transparency and going to the source to solve problems. We trust each other's expertise and we work together to find a solution. We know that we all make mistakes, but we learn and work together to move forward.
+                  Stop. Collaborate and listen. We are #OneClinixNote and we pride ourselves on working together to solve problems before sounding the alarm. We believe in transparency and going to the source to solve problems. We trust each other's expertise and we work together to find a solution. We know that we all make mistakes, but we learn and work together to move forward.
                 </p>
               </div>
             </div>
@@ -70,7 +70,7 @@ const About = () => {
             <div className="value-row">
               <div className="value-image">
                 <img 
-                  src="https://augmedix.com.bd/wp-content/uploads/2020/06/Be-a-beast.png" 
+                  src="https://Augmedix.com.bd/wp-content/uploads/2020/06/Be-a-beast.png" 
                   alt="Be a beast" 
                   className="img-fluid" 
                 />
@@ -87,7 +87,7 @@ const About = () => {
             <div className="value-row reverse">
               <div className="value-image">
                 <img 
-                  src="https://augmedix.com.bd/wp-content/uploads/2020/06/Let-doctor-be-doctor.png" 
+                  src="https://Augmedix.com.bd/wp-content/uploads/2020/06/Let-doctor-be-doctor.png" 
                   alt="Let doctors be doctors" 
                   className="img-fluid" 
                 />
@@ -107,7 +107,7 @@ const About = () => {
           <div className="text-content">
             <h1 className="title" >
               Build a career <br />
-              <span className="subtitle">at Augmedix</span>
+              <span className="subtitle">at ClinixNote</span>
             </h1>
             <p className="description">
               Clinician by clinician, we're changing the way healthcare is delivered.
@@ -122,7 +122,7 @@ const About = () => {
 
           {/* Right Side - Image */}
           <div className="image-container">
-            <img src={assets.Prompt2} alt="Career at Augmedix" className="image1" />
+            <img src={assets.Prompt2} alt="Career at ClinixNote" className="image1" />
           </div>
         </div>
       </div>

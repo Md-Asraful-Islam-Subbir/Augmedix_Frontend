@@ -24,14 +24,14 @@ function Contact() {
           <div className="support-section">
             <p className="contact-text">
               Looking for customer support?<br />
-              Email <a href="mailto:support@augmedix.com" className="email-link">support@augmedix.com</a>.
+              Email <a href="mailto:support@ClinixNote.com" className="email-link">support@ClinixNote.com</a>.
             </p>
           </div>
         </div>
 
         {/* Right side - Image */}
         <div className="image-container">
-          <img src={assets.contactImage} alt="Contact Augmedix" className="contact-image" />
+          <img src={assets.contactImage} alt="Contact ClinixNote" className="contact-image" />
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@ function Contact() {
     </select>
 
     <select required>
-      <option value="">How did you hear about Augmedix?*</option>
+      <option value="">How did you hear about ClinixNote?*</option>
       <option value="google">Google</option>
       <option value="linkedin">LinkedIn</option>
       <option value="referral">Referral</option>

@@ -14,17 +14,17 @@ const PhysicialTalk = () => {
             <span className="subtitle">for human-centric medicine</span>
           </h1>
           <p className="description">
-            From the emergency department to primary care, Augmedix handles the
+            From the emergency department to primary care, ClinixNote handles the
             EHR documentation, allowing clinicians to stay fully engaged with
             their patients.
           </p>
           <p className="description">
-            Augmedix ambient AI captures the conversation in the exam room
+            ClinixNote ambient AI captures the conversation in the exam room
             and generates accurate, complete, and easy-to-read medical notes.
           </p>
           <p className="description">
             With a range of products tailored to different needs and budgets,
-            Augmedix is helping organizations place a renewed focus on the
+            ClinixNote is helping organizations place a renewed focus on the
             doctor-patient relationship.
           </p>
           <button className="explore-button">Explore Products</button>
@@ -45,7 +45,7 @@ const PhysicialTalk = () => {
             <div className="testimonial-card">
               <p className="testimonial-text">
                 “This technology is transformative. In my 23 years of practice,
-                Augmedix Go is the biggest leap forward in technology that
+                ClinixNote Go is the biggest leap forward in technology that
                 I’ve seen.”
               </p>
               <p className="testimonial-author">Dr. Stephen Beck</p>
@@ -72,7 +72,7 @@ const PhysicialTalk = () => {
             </div>
             <div className="testimonial-card">
               <p className="testimonial-text">
-                “Augmedix has been life changing for me! It’s a great service that
+                “ClinixNote has been life changing for me! It’s a great service that
                 every physician should be using.”
               </p>
               <p className="testimonial-author">Dr. Mani Nezhad</p>

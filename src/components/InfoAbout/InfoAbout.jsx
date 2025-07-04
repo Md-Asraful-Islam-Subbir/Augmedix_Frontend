@@ -6,7 +6,7 @@ const InfoAbout = () => {
     <div className="info_about">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-heading">What is Augmedix?</h2>
+          <h2 className="section-heading">What is ClinixNote?</h2>
         </div>
 
         <div className="content">
@@ -22,7 +22,7 @@ const InfoAbout = () => {
 
           <div className="text-container">
             <p className="about-text">
-              Augmedix’s AI-powered products turn natural doctor-patient conversations into comprehensive medical notes to allow doctors to focus on what matters most: patient care. Augmedix offers high-touch levels of service where Clinical AI Specialists are involved to ensure the quality of medical documentation.
+              ClinixNote’s AI-powered products turn natural doctor-patient conversations into comprehensive medical notes to allow doctors to focus on what matters most: patient care. ClinixNote offers high-touch levels of service where Clinical AI Specialists are involved to ensure the quality of medical documentation.
             </p>
           </div>
         </div>

@@ -4,7 +4,7 @@ import Exploy from '../../components/ExployerMenu/Exploy'
 import InfoAbout from '../../components/InfoAbout/InfoAbout'
 import Culture from '../../components/Culture/Culture'
 import PhysicialTalk from '../../components/PhysicianTalk/PhysicialTalk'
-import WhyAugmedix from '../../components/PhysicianTalk/WhyAugmedix'
+import WhyClinixNote from '../../components/PhysicianTalk/WhyClinixNote'
 import EHRPartners from '../../components/PhysicianTalk/EHRPartners'
 import ContactSection from '../../components/ContactSection/ContactSection'
 
@@ -16,7 +16,7 @@ function Home() {
         <InfoAbout/>
         <Culture/>
         <PhysicialTalk/>
-        <WhyAugmedix/>
+        <WhyClinixNote/>
         <EHRPartners/>
         <ContactSection/>
     </div>

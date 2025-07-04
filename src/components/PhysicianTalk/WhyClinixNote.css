@@ -1,4 +1,4 @@
- .why-augmedix {
+ .why-ClinixNote {
     margin-top: 5rem;
   background-color: #000;
   color: white;
@@ -44,8 +44,8 @@
 .card {
   background-color: white;
   color: hsl(0, 0%, 10%);
-  width: 380px;
-  height: 450px;
+  width: 380px !important;
+  height: 450px !important;
   padding: 30px 20px;
   border-radius: 30px;
   text-align: left;

@@ -13,7 +13,7 @@ const ContactSection = () => {
         </p>
         <p className="support-text">
           Looking for customer support?<br />
-          Email <a href="mailto:support@augmedix.com">support@augmedix.com</a>.
+          Email <a href="mailto:support@ClinixNote.com">support@ClinixNote.com</a>.
         </p>
       </div>
 
@@ -34,7 +34,7 @@ const ContactSection = () => {
           </select>
 
           <select required>
-            <option value="">How did you hear about Augmedix?*</option>
+            <option value="">How did you hear about ClinixNote?*</option>
             <option value="google">Google</option>
             <option value="linkedin">LinkedIn</option>
             <option value="referral">Referral</option>

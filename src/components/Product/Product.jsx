@@ -46,7 +46,7 @@ const Product = () => {
       <div className="products-container1">
       <div className="product-card">
         <div className="product-header">
-          <h3 className="product-title">Augmedix Go</h3>
+          <h3 className="product-title">ClinixNote Go</h3>
           <GoIcon />
         </div>
         <p className="product-description">
@@ -56,7 +56,7 @@ const Product = () => {
 
       <div className="product-card">
         <div className="product-header">
-          <h3 className="product-title">Augmedix Assist</h3>
+          <h3 className="product-title">ClinixNote Assist</h3>
           <AssistIcon />
         </div>
         <p className="product-description">
@@ -66,7 +66,7 @@ const Product = () => {
 
       <div className="product-card">
         <div className="product-header">
-          <h3 className="product-title">Augmedix Live</h3>
+          <h3 className="product-title">ClinixNote Live</h3>
           <LiveIcon />
         </div>
         <p className="product-description">
@@ -75,7 +75,7 @@ const Product = () => {
       </div>
 </div>
       <div className="table-container">
-        <h2 className="table-title">Compare Augmedix products</h2>
+        <h2 className="table-title">Compare ClinixNote products</h2>
         <table className="comparison-table">
           <thead>
             <tr>
