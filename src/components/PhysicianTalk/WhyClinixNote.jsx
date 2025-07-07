@@ -13,7 +13,7 @@ const WhyClinixNote = () => {
         </p>
       </div>
       <div className="cards">
-        <div className="card">
+        <div className="cardd">
           <FaHandsHelping className="icon" />
           <h3>Self-service to full-service</h3>
           <p>
@@ -21,7 +21,7 @@ const WhyClinixNote = () => {
             meet clinicians where they are today while preparing your organization for the future.
           </p>
         </div>
-        <div className="card">
+        <div className="cardd">
           <FaFileMedicalAlt className="icon" />
           <h3>Specialties are our specialty</h3>
           <p>
@@ -29,7 +29,7 @@ const WhyClinixNote = () => {
             workflows, noisy environments, and intelligently curates data from the point of care.
           </p>
         </div>
-        <div className="card">
+        <div className="cardd">
           <FaLock className="icon" />
           <h3>Uncompromising security</h3>
           <p>

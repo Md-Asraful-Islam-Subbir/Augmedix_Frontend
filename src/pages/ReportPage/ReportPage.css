@@ -193,7 +193,7 @@ body {
 }
 
 .card {
-  width: 900px;
+  width: 900px !important;
   align-self: stretch;
   background: var(--card-bg);
   padding: 1.5rem;

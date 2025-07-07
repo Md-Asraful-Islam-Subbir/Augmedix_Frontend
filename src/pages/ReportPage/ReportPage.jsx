@@ -328,12 +328,12 @@ const analyzeTranscription = async () => {
         <aside className="patient-card">
           <div className={`patient-image-container ${imageLoaded ? 'loaded' : 'loading'}`}>
             <img 
-              src={patient.image || "/placeholder.jpg"} 
-              alt="Patient" 
-              className="patient-img"
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-            />
+  src={patient.image ? `data:image/jpeg;base64,${patient.image}` : "/placeholder.jpg"} 
+  alt="Patient" 
+  className="patient-img"
+  onLoad={handleImageLoad}
+  onError={handleImageError}
+/>
             {!imageLoaded && <div className="image-placeholder"></div>}
             <div className="patient-status">Active</div>
           </div>
@@ -580,7 +580,7 @@ const analyzeTranscription = async () => {
           )}
 
           {activeTab === "history" && (
-  <History history={history} setHistory={setHistory} />
+  <History  patient={patient}  history={history} setHistory={setHistory} />
 )}
 
           {activeTab === "exam" && (

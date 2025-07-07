@@ -41,7 +41,7 @@
   gap: 30px;
 }
 
-.card {
+.cardd {
   background-color: white;
   color: hsl(0, 0%, 10%);
   width: 380px !important;
@@ -52,14 +52,14 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.card h3 {
+.cardd h3 {
   color: #2b3af5;
   font-size: 24px;
   margin-top: 20px;
   margin-bottom: 10px;
 }
 
-.card p {
+.cardd p {
   font-size: 20px;
   line-height: 1.5; 
   text-align: left;

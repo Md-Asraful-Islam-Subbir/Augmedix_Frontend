@@ -141,7 +141,11 @@ useEffect(() => {
             <tr key={patient._id}>
               <td>
                 {patient.image ? (
-                  <img src={patient.image} alt="Patient" className="patient-image" />
+                  <img 
+  src={`data:image/jpeg;base64,${patient.image}`} 
+  alt="Patient" 
+  className="patient-image" 
+/>
                 ) : (
                   <button onClick={() => setCapturing(patient._id)}>Capture</button>
                 )}

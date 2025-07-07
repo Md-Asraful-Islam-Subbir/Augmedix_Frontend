@@ -167,3 +167,31 @@
     justify-content: flex-end;
   }
 }
+/* Add this to your existing History.css file */
+
+.analysis-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.analysis-item {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1rem;
+  border-left: 4px solid #4fd1c5;
+}
+
+.analysis-item p {
+  margin: 0.5rem 0;
+  color: #2d3748;
+  line-height: 1.5;
+}
+
+.analysis-item hr {
+  border: none;
+  border-top: 1px dashed #cbd5e0;
+  margin-top: 1rem;
+}
