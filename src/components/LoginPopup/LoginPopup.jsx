@@ -16,32 +16,38 @@ const LoginPopup = ({ setShowLogin }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    const endpoint = currState === "Login" ? "/login" : "/signup";
+const onSubmitHandler = async (e) => {
+  e.preventDefault();
+  const endpoint = currState === "Login" ? "/login" : "/signup";
 
-    try {
-        const response = await fetch(`http://localhost:4000/api${endpoint}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...formData, userType }),
-        });
+  try {
+    const response = await fetch(`http://localhost:4000/api${endpoint}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...formData, userType }),
+    });
 
-        const data = await response.json();
-        if (response.ok) {
-            alert(`Successfully ${currState === "Login" ? "logged in" : "signed up"} as ${userType}`);
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("userType", userType); // Store userType in localStorage
+    const data = await response.json();
 
-            window.location.href = userType === "Admin" ? "/admin-dashboard" : "/";
-        } else {
-            alert(data.message);
-        }
-    } catch (error) {
-        alert("Something went wrong.");
+    if (response.ok) {
+      if (currState === "Login") {
+        // ✅ Only store token when logging in
+        alert(`Successfully logged in as ${userType}`);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userType", userType);
+        window.location.href = userType === "Admin" ? "/admin-dashboard" : "/";
+      } else {
+        // ✅ If signup, just show a message and close popup
+        alert(data.message); // "Verification email sent. Please check your inbox."
+        setShowLogin(false);
+      }
+    } else {
+      alert(data.message);
     }
+  } catch (error) {
+    alert("Something went wrong.");
+  }
 };
-
 
     const onForgotPasswordHandler = async (e) => {
         e.preventDefault();

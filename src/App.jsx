@@ -17,6 +17,7 @@ import ReportPage from './pages/ReportPage/ReportPage'
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Contact from './components/ContactSection/Contact'
+import VerifyEmail from './components/LoginPopup/VerifyEmail'
 
 const App = () => {
   const [showLogin,setShowLogin]=useState(false)
@@ -38,6 +39,7 @@ const App = () => {
 <Route path='/view-appointment' element={<ViewAppointment/>}/>
 <Route path="/report" element={<ReportPage/>} />
 <Route path="/contact" element={<Contact/>} />
+<Route path="/verify-email/:token" element={<VerifyEmail/>} />
 </Routes>
 <Footer />
     </div>
