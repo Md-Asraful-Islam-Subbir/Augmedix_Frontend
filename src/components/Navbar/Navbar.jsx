@@ -50,11 +50,24 @@ const Navbar = ({ setShowLogin, showLogin }) => {
         {!token ? (
           <button className="btn-signin" onClick={() => setShowLogin(true)}>Sign In</button>
         ) : (
-          <button
-            className="btn-signin"
-            onClick={() => navigate(userType === "Admin" ? "/admin-dashboard" : "/view-appointment")}
-          >
-            {userType === "Admin" ? "Admin Dashboard" : "Appointment"}
+         <button
+  className="btn-signin"
+  onClick={() =>
+    navigate(
+      userType === "Admin"
+        ? "/admin-dashboard"
+        : userType === "Doctor"
+        ? "/doctor-dashboard"
+        : "/view-appointment"
+    )
+  }
+>
+            {userType === "Admin"
+  ? "Admin Dashboard"
+  : userType === "Doctor"
+  ? "Doctor Dashboard"
+  : "View Appointment"}
+
           </button>
         )}
 

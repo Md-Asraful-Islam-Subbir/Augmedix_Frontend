@@ -18,6 +18,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Contact from './components/ContactSection/Contact'
 import VerifyEmail from './components/LoginPopup/VerifyEmail'
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard'
+import DoctorsPage from './pages/DoctorDashboard/DoctorsPage'
+import AddDoctor from './pages/DoctorDashboard/AddDoctor'
 
 const App = () => {
   const [showLogin,setShowLogin]=useState(false)
@@ -32,7 +35,8 @@ const App = () => {
 <Route path='/about-us' element={<About/>} />
 <Route path='/resources' element={<Resources/>} />
 <Route path="/reset-password/:token" element={<ResetPassword/>} />
-<Route path="/admin-dashboard" element={<DoctorDashboard/>} />
+<Route path="/doctor-dashboard" element={<DoctorDashboard/>} />
+<Route path="/admin-dashboard" element={<AdminDashboard/>} />
 <Route path="/appointment-form" element={<AppointmentForm/>} />
 <Route path='/doctor-patients' element={<DoctorPatients/>}/>
 <Route path='/doctor-appointments' element={<Appointment/>}/>
@@ -40,6 +44,8 @@ const App = () => {
 <Route path="/report" element={<ReportPage/>} />
 <Route path="/contact" element={<Contact/>} />
 <Route path="/verify-email/:token" element={<VerifyEmail/>} />
+<Route path="/doctors" element={<DoctorsPage/>} />
+<Route path="/add-doctor" element={<AddDoctor/>} />
 </Routes>
 <Footer />
     </div>

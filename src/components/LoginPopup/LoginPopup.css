@@ -2,31 +2,61 @@
 .login-popup, .forgot-password-popup {
   position: fixed;
   inset: 0;
-  z-index: 999;
-  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
   display: grid;
   place-items: center;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-/* Shared container style */
-.login-popup-container,
-.forgot-password-container {
-  width: 100%;
-  max-width: 400px;
-  background: #ffffff;
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  animation: fadeIn 0.3s ease-in-out;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Main Container */
+.login-popup-container,
+.forgot-password-container {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+}
+
+/* Tabs - Modern Style */
+.login-sections {
+  display: flex;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.section-tab {
+  flex: 1;
+  padding: 12px 0;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.section-tab.active {
+  background: #fff;
+  color: #4f46e5;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
 }
 
 /* Title Bar */
@@ -35,136 +65,284 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .login-popup-title h2,
 .forgot-password-title h2 {
   font-size: 24px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
 }
 
 .login-popup-title img,
 .forgot-password-title img {
-  width: 18px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   opacity: 0.6;
-  transition: 0.3s;
+  transition: opacity 0.2s;
 }
+
 .login-popup-title img:hover,
 .forgot-password-title img:hover {
   opacity: 1;
 }
 
-/* Inputs */
+/* Input Groups */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Input Fields */
 .login-popup-inputs,
 .forgot-password-inputs {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .login-popup-inputs input,
-.forgot-password-inputs input,
-.login-popup-role select {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+.forgot-password-inputs input {
+  padding: 14px 16px;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
   font-size: 15px;
-  transition: border-color 0.3s;
+  background: #fff;
+  transition: all 0.3s ease;
 }
 
 .login-popup-inputs input:focus,
-.forgot-password-inputs input:focus,
-.login-popup-role select:focus {
-  border-color: #2c49ff;
+.forgot-password-inputs input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
   outline: none;
 }
 
-/* Role dropdown */
-.login-popup-role {
+/* Button Styles */
+.login-popup-container button,
+.forgot-password-container button {
+  width: 100%;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 5px rgba(79, 70, 229, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Button Hover State */
+.login-popup-container button:hover,
+.forgot-password-container button:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+}
+
+/* Button Active State */
+.login-popup-container button:active,
+.forgot-password-container button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(79, 70, 229, 0.2);
+}
+
+/* Button Focus State */
+.login-popup-container button:focus,
+.forgot-password-container button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+/* Disabled Button State */
+.login-popup-container button:disabled,
+.forgot-password-container button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Loading Spinner Animation */
+.loading-spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Ripple Effect */
+.login-popup-container button::after,
+.forgot-password-container button::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 1%, transparent 1%) center/15000%;
+  opacity: 0;
+  transition: opacity 0.5s, background-size 0.5s;
+}
+
+.login-popup-container button:active::after,
+.forgot-password-container button:active::after {
+  background-size: 100%;
+  opacity: 1;
+  transition: 0s;
+}
+
+/* Actions (links) */
+.login-popup-actions {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-weight: 500;
-  color: #555;
-}
-
-/* Buttons */
-.login-popup-container button,
-.forgot-password-container button {
-  background-color: #2c49ff;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s ease;
-}
-
-.login-popup-container button:hover,
-.forgot-password-container button:hover {
-  background-color: #1d34cc;
-}
-
-/* Link & Switching text */
-.login-popup p,
-.forgot-password-popup p {
+  margin-top: 12px;
   text-align: center;
-  font-size: 14px;
 }
 
-.login-popup p span {
-  color: #2c49ff;
+.login-popup-actions p {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.login-popup-actions span {
+  color: #4f46e5;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.2s;
 }
 
-.login-popup p span:hover {
+.login-popup-actions span:hover {
   text-decoration: underline;
 }
 
-/* Forgot Password link */
-.login-popup p:last-child {
-  margin-top: -10px;
-  color: #2c49ff;
-  font-size: 13px;
-  text-align: right;
+.forgot-link {
+  color: #4f46e5;
+  font-size: 14px;
+  text-align: center;
   cursor: pointer;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
   text-decoration: underline;
 }
 
+/* Forgot Password Specific Styles */
+.forgot-instructions {
+  color: #6c757d;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.back-to-login {
+  color: #4f46e5;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 16px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.back-to-login:hover {
+  text-decoration: underline;
+}
+
+/* Screen Reader Only Text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.login-sections {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.section-tab {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  color: #6b7280; /* Gray-600 */
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.section-tab.active {
+  color: #4f46e5;
+}
+
+.section-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: tomato;
+  border-radius: 2px;
+}
+
+.section-tab:hover {
+  background: #f9fafb;
+}
+
+/* Responsive */
 @media (max-width: 480px) {
   .login-popup-container,
   .forgot-password-container {
-    padding: 20px;
-    border-radius: 10px;
-    gap: 20px;
+    padding: 24px;
+    margin: 16px;
+    max-width: calc(100% - 32px);
   }
-
+  
   .login-popup-title h2,
   .forgot-password-title h2 {
     font-size: 20px;
   }
-
-  .login-popup-inputs input,
-  .forgot-password-inputs input,
-  .login-popup-role select {
-    padding: 10px;
+  
+  .section-tab {
     font-size: 14px;
-  }
-
-  .login-popup-container button,
-  .forgot-password-container button {
-    padding: 10px;
-    font-size: 15px;
-  }
-
-  .login-popup p,
-  .forgot-password-popup p {
-    font-size: 13px;
+    padding: 10px 0;
   }
 }
-

@@ -66,8 +66,8 @@ const DoctorDashboard = () => {
   return (
     <div className="doctor-dashboard">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <ul className="sidebar-menu">
+      <aside className="sidebar1">
+        <ul className="sidebar1-menu">
           <li onClick={() => navigate("/doctor-dashboard")} className="active">
             <span>🏥</span> Dashboard
           </li>
