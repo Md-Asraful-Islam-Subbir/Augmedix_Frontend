@@ -25,7 +25,7 @@ const Navbar = ({ setShowLogin, showLogin }) => {
     setUserType("");
     navigate("/");
   };
-
+  console.log("userType:", userType);
   return (
     <div className='navbar'>
       <Link to='/'><img src={assets.logo} alt="Logo" className="logo" /></Link>
@@ -50,33 +50,39 @@ const Navbar = ({ setShowLogin, showLogin }) => {
         {!token ? (
           <button className="btn-signin" onClick={() => setShowLogin(true)}>Sign In</button>
         ) : (
-         <button
-  className="btn-signin"
-  onClick={() =>
-    navigate(
-      userType === "Admin"
-        ? "/admin-dashboard"
-        : userType === "Doctor"
-        ? "/doctor-dashboard"
-        : "/view-appointment"
-    )
-  }
->
+          <button
+            className="btn-signin"
+            onClick={() =>
+              navigate(
+                userType === "Admin"
+                  ? "/admin-dashboard"
+                  : userType === "Doctor"
+                    ? "/doctor-dashboard"
+                    : "/view-appointment"
+              )
+            }
+          >
             {userType === "Admin"
-  ? "Admin Dashboard"
-  : userType === "Doctor"
-  ? "Doctor Dashboard"
-  : "View Appointment"}
+              ? "Admin Dashboard"
+              : userType === "Doctor"
+                ? "Doctor Dashboard"
+                : "View Appointment"}
 
           </button>
         )}
 
-        {userType !== "Admin" && (
+        {userType !== "Doctor" && userType !== "Admin" && (
           <button
             className="btn-contact"
-            onClick={() => navigate(token ? "/appointment-form" : "/contact")}
+            onClick={() =>
+              navigate(
+                token && userType === "Patient"
+                  ? "/view-doctor"
+                  : "/contact"
+              )
+            }
           >
-            Contact Us
+            {token && userType === "Patient" ? "View Doctors" : "Contact Us"}
           </button>
         )}
 
@@ -84,10 +90,27 @@ const Navbar = ({ setShowLogin, showLogin }) => {
           <div className="navbar-profile">
             <img src={assets.profile_icon} alt="Profile" />
             <ul className="navbar-profile-dropdown">
-              <li onClick={() => navigate(userType === "Admin" ? "/admin-dashboard" : "/view-appointment")}>
+              <li
+                onClick={() =>
+                  navigate(
+                    userType === "Admin"
+                      ? "/admin-dashboard"
+                      : userType === "Doctor"
+                        ? "/doctor-dashboard"
+                        : "/appointment-form"
+                  )
+                }
+              >
                 <img src={assets.appointment} alt="Appointment" />
-                <p>{userType === "Admin" ? "Admin Dashboard" : "Appointment"}</p>
+                <p>
+                  {userType === "Admin"
+                    ? "Admin Dashboard"
+                    : userType === "Doctor"
+                      ? "Doctor Dashboard"
+                      : "appointment-form"}
+                </p>
               </li>
+
               <hr />
               <li onClick={logout}>
                 <img src={assets.logout_icon} alt="Logout" />
@@ -119,15 +142,21 @@ const Navbar = ({ setShowLogin, showLogin }) => {
               </button>
             </li>
           )}
-
           {userType !== "Admin" && (
-            <li onClick={() => {
-              navigate(token ? "/appointment-form" : "/contact");
-              setMenuOpen(false);
-            }}>
-              <button className="btn-contact">Contact Us</button>
-            </li>
+            <button
+              className="btn-contact"
+              onClick={() =>
+                navigate(
+                  userType?.toLowerCase() === "doctor"
+                    ? "/contact"
+                    : "/appointment-form"
+                )
+              }
+            >
+              Contact Us
+            </button>
           )}
+
         </ul>
       )}
     </div>

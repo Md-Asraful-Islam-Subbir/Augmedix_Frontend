@@ -101,10 +101,15 @@ const DoctorDashboard = () => {
       <main className="main-content">
         <header className="header">
           <h1>Doctor Dashboard</h1>
-          <div className="user-profile">
-            <img src={doctor.avatar || assets.Physician1} alt="Doctor Avatar" />
-            <span>{doctor.name}</span>
-          </div>
+         <div className="user-profile">
+  <img src={doctor.avatar || assets.Physician1} alt="Doctor Avatar" />
+  <div className="doctor-info">
+    <span className="doctor-name">{doctor.name}</span>
+    <span className="doctor-email">{doctor.email}</span>
+    <span className="doctor-specialization">{doctor.specialization}</span>
+  </div>
+</div>
+
         </header>
 
         <section className="appointments">
