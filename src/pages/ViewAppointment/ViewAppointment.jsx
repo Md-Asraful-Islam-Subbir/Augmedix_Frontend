@@ -1,62 +1,42 @@
-import React, { useEffect, useState } from "react";
-import "./ViewAppointment.css";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const ViewAppointment = () => {
-  const [appointments, setAppointments] = useState([]);
+  const { id } = useParams();
+  const [appointment, setAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchAppointments = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setError("No token found. Please log in.");
-        setLoading(false);
-        return;
-      }
-
+    const fetchAppointment = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/appointmentsClient", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setAppointments(data);
-        } else {
-          setError("Failed to fetch appointments.");
-        }
-      } catch (error) {
-        setError("Error fetching appointments. Please try again.");
+        const response = await axios.get(`http://localhost:4000/api/appointments/appointments/${id}`);
+        setAppointment(response.data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load appointment.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAppointments();
-  }, []);
+    fetchAppointment();
+  }, [id]);
 
-  if (loading) return <p>Loading appointments...</p>;
-  if (error) return <p className="error">{error}</p>;
+  if (loading) return <div>Loading appointment...</div>;
+  if (error) return <div>{error}</div>;
+  if (!appointment) return <div>No appointment found.</div>;
 
   return (
-    <div className="view-appointment-container">
-      <h2>Your Appointments</h2>
-      {appointments.length === 0 ? (
-        <p>No appointments found.</p>
-      ) : (
-        <ul>
-          {appointments.map((appt) => (
-            <li key={appt._id} className="appointment-item">
-              <p><strong>Doctor:</strong> {appt.doctor}</p>
-              <p><strong>Date:</strong> {appt.appointmentDate}</p>
-              <p><strong>Time:</strong> {appt.appointmentTime}</p>
-              <p><strong>Serial No:</strong> {appt.serialNumber || "Not assigned"}</p>
-              <p><strong>Procedure:</strong> {appt.procedure}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div style={{ padding: "20px" }}>
+      <h2>Appointment Details</h2>
+      <p><strong>Patient Name:</strong> {appointment.name}</p>
+      <p><strong>Doctor:</strong> {appointment.doctor}</p>
+      <p><strong>Contact:</strong> {appointment.contact}</p>
+      <p><strong>Preferred Date:</strong> {new Date(appointment.preferredDate).toLocaleDateString()}</p>
+      <p><strong>Preferred Time:</strong> {appointment.preferredTime}</p>
+      <p><strong>Status:</strong> {appointment.status}</p>
     </div>
   );
 };

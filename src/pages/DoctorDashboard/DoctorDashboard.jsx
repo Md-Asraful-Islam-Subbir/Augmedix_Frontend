@@ -18,7 +18,7 @@ const DoctorDashboard = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:4000/api/doctor/me", {
+        const response = await fetch("http://localhost:4000/api/auth/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -77,8 +77,8 @@ const DoctorDashboard = () => {
           <li onClick={() => navigate("/doctor-patients",{ state: { doctor } })}>
             <span>👩‍⚕️</span> Patients
           </li>
-          <li onClick={() => navigate("/doctor-messages")}>
-            <span>💬</span> Messages
+          <li onClick={() => navigate("/doctor-schedule")}>
+            <span>💬</span> Availability
           </li>
           <li onClick={() => navigate("/doctor-reports")}>
             <span>📊</span> Reports

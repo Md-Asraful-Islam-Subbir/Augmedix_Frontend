@@ -1,115 +1,61 @@
-/* Appointments.css */
-.appointment-container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    color: #2c3e50;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .appointment-item {
-    background: #f8f9fa;
-    padding: 15px;
-    margin: 12px 0;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .appointment-info {
-    flex: 1;
-  }
-  
-  .appointment-info p {
-    margin: 4px 0;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .serial-input-container {
-    display: flex;
-    align-items: center;
-    margin: 0 15px;
-  }
-  
-  .serial-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    width: 120px;
-  }
-  
-  .serial-input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  .action-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  button {
-    padding: 10px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    background: #007bff;
-    color: white;
-    font-size: 14px;
-    transition: background 0.3s ease;
-  }
-  
-  button:hover {
-    background: #0056b3;
-  }
-  
-  .modal, .details-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 25px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    text-align: center;
-    width: 400px;
-  }
-  
-  .modal select, .modal input {
-    padding: 10px;
-    margin: 12px 0;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  
-  .modal button {
-    margin-top: 12px;
-    padding: 12px 18px;
-    background: #28a745;
-    color: white;
-    font-size: 14px;
-  }
-  
-  .modal button:last-child {
-    background: #dc3545;
-  }
-  
-  .details-modal p {
-    margin: 6px 0;
-    font-size: 14px;
-    color: #333;
-  }
+.appointments-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.appointments-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.appointment-card {
+  background-color: #f9f9f9;
+  border-left: 6px solid #4CAF50;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.appointment-card:hover {
+  transform: scale(1.02);
+}
+
+.appointment-card p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.appointment-card strong {
+  color: #111;
+}
+.appointment-card button {
+  padding: 8px 14px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.appointment-card button:hover {
+  background-color: #45a049;
+}
+.minimized-info {
+  font-style: italic;
+  color: green;
+  margin-top: 8px;
+}
+
+.status-confirmed {
+  color: green;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: orange;
+}

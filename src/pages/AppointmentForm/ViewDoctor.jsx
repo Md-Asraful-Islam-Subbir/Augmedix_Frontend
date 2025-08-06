@@ -8,7 +8,7 @@ const ViewDoctor = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/doctorsforappointment");
+        const res = await fetch("http://localhost:4000/api/doctor/doctorsforappointment");
         if (!res.ok) throw new Error("Failed to fetch doctors");
         const data = await res.json();
         setDoctors(data);
@@ -34,9 +34,16 @@ const ViewDoctor = () => {
             <h3>{doc.name}</h3>
             <p className="specialization">{doc.specialization}</p>
             <p className="email">{doc.email}</p>
-            <Link to="/appointment-form">
-              <button>Book Appointment</button>
-            </Link>
+
+            <div className="doctor-actions">
+              <Link to="/appointment-form">
+                <button>Book Appointment</button>
+              </Link>
+
+              <Link to={`/doctor-schedule/${doc._id}`}>
+                <button>View Schedule </button>
+              </Link>
+            </div>
           </div>
         ))}
       </div>

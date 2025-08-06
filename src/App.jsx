@@ -22,6 +22,8 @@ import AdminDashboard from './pages/AdminDashboard/AdminDashboard'
 import DoctorsPage from './pages/DoctorDashboard/DoctorsPage'
 import AddDoctor from './pages/DoctorDashboard/AddDoctor'
 import ViewDoctor from './pages/AppointmentForm/ViewDoctor'
+import DoctorSchedule from './pages/DoctorDashboard/DoctorSchedule'
+import DoctorSchedulePage from './pages/AppointmentForm/DoctorSchedulePage'
 
 const App = () => {
   const [showLogin,setShowLogin]=useState(false)
@@ -41,6 +43,7 @@ const App = () => {
 <Route path="/appointment-form" element={<AppointmentForm/>} />
 <Route path='/doctor-patients' element={<DoctorPatients/>}/>
 <Route path='/doctor-appointments' element={<Appointment/>}/>
+<Route path='/doctor-schedule' element={<DoctorSchedule/>}/>
 <Route path='/view-appointment' element={<ViewAppointment/>}/>
 <Route path='/view-doctor' element={<ViewDoctor/>}/>
 <Route path="/report" element={<ReportPage/>} />
@@ -48,6 +51,7 @@ const App = () => {
 <Route path="/verify-email/:token" element={<VerifyEmail/>} />
 <Route path="/doctors" element={<DoctorsPage/>} />
 <Route path="/add-doctor" element={<AddDoctor/>} />
+<Route path="/doctor-schedule/:doctorId" element={<DoctorSchedulePage/>} />
 </Routes>
 <Footer />
     </div>

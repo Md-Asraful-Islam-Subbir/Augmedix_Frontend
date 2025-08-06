@@ -11,21 +11,38 @@ const AppointmentForm = () => {
     saveInfo: false,
   });
 
-  const [timeSlots] = useState([
-    "09:00 AM",
-    "10:00 AM",
-    "11:30 AM",
-    "02:00 PM",
-    "04:00 PM",
-  ]);
-
   const [doctors, setDoctors] = useState([]);
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+useEffect(() => {
+  const fetchAvailableSlots = async () => {
+    if (!formData.doctor || !formData.preferredDate) return;
 
+    const selectedDoctor = doctors.find((doc) => doc.name === formData.doctor);
+    if (!selectedDoctor) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:4000/api/doctor/timeslots?doctorId=${selectedDoctor._id}&date=${formData.preferredDate}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch time slots");
+      const data = await res.json();
+
+      setAvailableTimeSlots(data);
+    } catch (error) {
+      console.error("Error fetching available time slots:", error);
+      setAvailableTimeSlots([]); // Clear previous slots
+    }
+  };
+
+  fetchAvailableSlots();
+}, [formData.doctor, formData.preferredDate]);
+
+const [doctorSchedule, setDoctorSchedule] = useState([]);
   useEffect(() => {
     // Fetch doctors dynamically
     const fetchDoctors = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/doctorsforappointment");
+        const res = await fetch("http://localhost:4000/api/doctor/doctorsforappointment");
         if (!res.ok) throw new Error("Failed to fetch doctors");
         const data = await res.json();
         setDoctors(data);
@@ -43,13 +60,34 @@ const AppointmentForm = () => {
     }
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
+const handleChange = async (e) => {
+  const { name, value, type, checked } = e.target;
+
+  // 👉 If doctor changes, fetch the schedule
+  if (name === "doctor") {
+    setFormData({ ...formData, [name]: value });
+
+    const selectedDoctor = doctors.find((doc) => doc.name === value);
+    if (selectedDoctor) {
+      try {
+        const res = await fetch(`http://localhost:4000/api/doctor/${selectedDoctor._id}/schedule`);
+        if (!res.ok) throw new Error("Failed to fetch doctor schedule");
+        const data = await res.json();
+        setDoctorSchedule(data);
+      } catch (error) {
+        console.error("Error fetching doctor schedule:", error);
+      }
+    }
+    return; // Exit early
+  }
+
+  // Otherwise handle normally
+  setFormData({
+    ...formData,
+    [name]: type === "checkbox" ? checked : value,
+  });
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +103,7 @@ const AppointmentForm = () => {
     }
 
     try {
-      const res = await fetch("/api/quick-appointments", {
+      const res = await fetch("http://localhost:4000/api/appointments/quick-appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -153,31 +191,44 @@ const AppointmentForm = () => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="preferredDate">Preferred Date</label>
-            <input
-              type="date"
-              name="preferredDate"
-              value={formData.preferredDate}
-              onChange={handleChange}
-              required
-            />
+           <input
+  type="date"
+  name="preferredDate"
+  value={formData.preferredDate}
+  onChange={handleChange}
+  required
+  min={
+    doctorSchedule.length > 0
+      ? new Date(
+          Math.min(...doctorSchedule.map(s => new Date(s.validFrom)))
+        ).toISOString().split("T")[0]
+      : ""
+  }
+  max={
+    doctorSchedule.length > 0
+      ? new Date(
+          Math.max(...doctorSchedule.map(s => new Date(s.validTo)))
+        ).toISOString().split("T")[0]
+      : ""
+  }
+/>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="preferredTime">Preferred Time</label>
-            <select
-              name="preferredTime"
-              value={formData.preferredTime}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Time</option>
-              {timeSlots.map((slot, i) => (
-                <option key={i} value={slot}>
-                  {slot}
-                </option>
-              ))}
-            </select>
-          </div>
+         <div className="form-group">
+  <label htmlFor="preferredTime">Preferred Time</label>
+  <select
+    name="preferredTime"
+    value={formData.preferredTime}
+    onChange={handleChange}
+    required
+  >
+    <option value="">Select Time</option>
+    {availableTimeSlots.map((slot, i) => (
+      <option key={i} value={slot.startTime}>
+        {slot.startTime} - {slot.endTime}
+      </option>
+    ))}
+  </select>
+</div>
         </div>
 
         <div className="checkbox-group">

@@ -1,0 +1,20 @@
+.doctor-schedule-page {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.schedule-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 12px 0;
+  background: #fafafa;
+}
+
+.days-list {
+  margin-top: 10px;
+}
+
+.day-item {
+  margin: 4px 0;
+}

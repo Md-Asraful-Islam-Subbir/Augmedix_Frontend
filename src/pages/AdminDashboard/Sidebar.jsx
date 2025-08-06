@@ -13,7 +13,7 @@ const Sidebar = () => {
           <Link to="/doctors" className="sidebar-link">Doctors</Link>
         </li>
         <li>Settings</li>
-        <li>Confirmation</li>
+        <li><Link to="/doctor-appointments" className="sidebar-link">Confirmation</Link></li>
         <li>Logout</li>
       </ul>
     </div>
