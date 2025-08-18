@@ -8,7 +8,7 @@ const DoctorPatients = () => {
   const [doctor, setDoctor] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [capturing, setCapturing] = useState(false);
-  const [recognitionResult, setRecognitionResult] = useState(null); // State to store recognition result
+  const [recognitionResult, setRecognitionResult] = useState(null);
   const webcamRef = useRef(null);
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const DoctorPatients = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:4000/api/patients", {
+        const response = await fetch("http://localhost:4000/api/patients/my-patients", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -38,29 +38,30 @@ const DoctorPatients = () => {
 
     fetchPatients();
   }, []);
-useEffect(() => {
-  const fetchDoctor = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
 
-    try {
-      const response = await fetch("http://localhost:4000/api/doctors", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-      if (response.ok) {
-        const data = await response.json();
-        setDoctor(data);
-      } else {
-        console.error("Failed to fetch doctor profile");
+      try {
+        const response = await fetch("http://localhost:4000/api/doctors/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setDoctor(data);
+        } else {
+          console.error("Failed to fetch doctor profile");
+        }
+      } catch (error) {
+        console.error("Error fetching doctor:", error);
       }
-    } catch (error) {
-      console.error("Error fetching doctor:", error);
-    }
-  };
+    };
 
-  fetchDoctor();
-}, []);
+    fetchDoctor();
+  }, []);
 
   const captureImage = async (patientId) => {
     if (webcamRef.current) {
@@ -72,7 +73,6 @@ useEffect(() => {
         return;
       }
 
-      // Extract the raw Base64 data (removing 'data:image/png;base64,')
       const base64Data = imageSrc.split(',')[1];
 
       try {
@@ -84,11 +84,8 @@ useEffect(() => {
 
         const result = await response.json();
         console.log("Recognition result:", result);
-
-        // Set the recognition result to display in the UI
         setRecognitionResult(result);
 
-        // Update the patient list with the new image
         setPatients((prevPatients) =>
           prevPatients.map((p) =>
             p._id === patientId ? { ...p, image: imageSrc } : p
@@ -100,25 +97,32 @@ useEffect(() => {
     }
   };
 
-  const removePatient = async (patientId) => {
-    try {
-      const response = await fetch(`http://localhost:4000/api/patients/${patientId}`, {
-        method: "DELETE",
-      });
+const removePatient = async (patientId) => {
+  try {
+    const token = localStorage.getItem("token");
 
-      if (response.ok) {
-        alert("Patient removed successfully");
-        setPatients((prevPatients) => prevPatients.filter((p) => p._id !== patientId));
-      } else {
-        console.error("Failed to remove patient");
-      }
-    } catch (error) {
-      console.error("Error removing patient:", error);
+    const response = await fetch(`http://localhost:4000/api/patients/${patientId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      alert("Patient removed successfully");
+      setPatients((prevPatients) => prevPatients.filter((p) => p._id !== patientId));
+    } else {
+      const errData = await response.json();
+      console.error("Failed to remove patient:", errData.message);
     }
-  };
+  } catch (error) {
+    console.error("Error removing patient:", error);
+  }
+};
+
 
   const closeRecognitionModal = () => {
-    setRecognitionResult(null); // Clear the recognition result
+    setRecognitionResult(null);
   };
 
   return (
@@ -129,10 +133,9 @@ useEffect(() => {
           <tr>
             <th>Image</th>
             <th>Name</th>
-            <th>Phone</th>
-            <th>Records</th>
-            <th>Report</th>
-            <th>Information</th>
+            <th>Contact</th>
+            <th>Doctor</th>
+            <th>Appointment</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -142,42 +145,32 @@ useEffect(() => {
               <td>
                 {patient.image ? (
                   <img 
-  src={`data:image/jpeg;base64,${patient.image}`} 
-  alt="Patient" 
-  className="patient-image" 
-/>
+                    src={patient.image.startsWith('data:') ? patient.image : `data:image/jpeg;base64,${patient.image}`} 
+                    alt="Patient" 
+                    className="patient-image" 
+                  />
                 ) : (
                   <button onClick={() => setCapturing(patient._id)}>Capture</button>
                 )}
               </td>
+              <td>{patient.name}</td>
+              <td>{patient.contact}</td>
+              <td>{patient.doctor}</td>
               <td>
-                Name: {patient.firstName} {patient.lastName}
-                <br />
-                Appointment: {patient.appointmentDate} at {patient.appointmentTime}
-                <br />
-                P History: {patient.procedure}
-              </td>
-              <td>{patient.phone}</td>
-              <td>
-                <button>Click</button>
+                {patient.appointmentDate} at {patient.appointmentTime}
               </td>
               <td>
-                <button onClick={() => navigate("/report", { state: {  patient: { ...patient, id: patient._id }, doctor } })}>Reports</button>
-              </td>
-              <td>
-                <button className="view-button" onClick={() => setSelectedPatient(patient)}>
-                  View
-                </button>
-              </td>
-              <td>
+                <button onClick={() => setSelectedPatient(patient)}>View</button>
                 <button onClick={() => removePatient(patient._id)}>Remove</button>
+                <button onClick={() => navigate("/report", { state: { patient, doctor } })}>
+                  Report
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Webcam Modal */}
       {capturing && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -198,37 +191,21 @@ useEffect(() => {
         </div>
       )}
 
-      {/* Modal for Viewing Patient Details */}
       {selectedPatient && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Patient Details</h3>
-            <p>
-              <strong>Name:</strong> {selectedPatient.firstName} {selectedPatient.lastName}
-            </p>
-            <p>
-              <strong>Phone:</strong> {selectedPatient.phone}
-            </p>
-            <p>
-              <strong>Email:</strong> {selectedPatient.email}
-            </p>
-            <p>
-              <strong>Address:</strong> {selectedPatient.address}, {selectedPatient.city}, {selectedPatient.state}, {selectedPatient.zip}
-            </p>
-            <p>
-              <strong>Gender:</strong> {selectedPatient.gender}
-            </p>
-            <p>
-              <strong>Department:</strong> {selectedPatient.department}
-            </p>
-            <p>
-              <strong>Doctor:</strong> {selectedPatient.doctor}
-            </p>
-            <p>
-              <strong>Procedure:</strong> {selectedPatient.procedure || "N/A"}
-            </p>
+            <p><strong>Name:</strong> {selectedPatient.name}</p>
+            <p><strong>Contact:</strong> {selectedPatient.contact}</p>
+            <p><strong>Doctor:</strong> {selectedPatient.doctor}</p>
+            <p><strong>Appointment Date:</strong> {selectedPatient.appointmentDate}</p>
+            <p><strong>Appointment Time:</strong> {selectedPatient.appointmentTime}</p>
             {selectedPatient.image && (
-              <img src={selectedPatient.image} alt="Patient" className="patient-modal-image" />
+              <img 
+                src={selectedPatient.image.startsWith('data:') ? selectedPatient.image : `data:image/jpeg;base64,${selectedPatient.image}`} 
+                alt="Patient" 
+                className="patient-modal-image" 
+              />
             )}
             <button className="close-button" onClick={() => setSelectedPatient(null)}>
               Close
@@ -237,28 +214,18 @@ useEffect(() => {
         </div>
       )}
 
-      {/* Modal for Recognition Result */}
       {recognitionResult && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Recognition Result</h3>
-            <p>
-              <strong>Match:</strong> {recognitionResult.match ? "Yes" : "No"}
-            </p>
+            <p><strong>Match:</strong> {recognitionResult.match ? "Yes" : "No"}</p>
             <p>
               <strong>Confidence:</strong> 
               {recognitionResult.confidence !== undefined && !isNaN(recognitionResult.confidence) 
                 ? recognitionResult.confidence.toFixed(2) + "%" 
                 : "N/A"}
             </p>
-            <p>
-              <strong>Message:</strong> {recognitionResult.message}
-            </p>
-            {recognitionResult.patient && (
-              <p>
-                <strong>Patient ID:</strong> {recognitionResult.patient.id}
-              </p>
-            )}
+            <p><strong>Message:</strong> {recognitionResult.message}</p>
             <button className="close-button" onClick={closeRecognitionModal}>
               Close
             </button>

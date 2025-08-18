@@ -23,6 +23,22 @@ const Appointments = () => {
       setLoading(false);
     }
   };
+const handleDecline = async (appointment) => {
+  try {
+    await axios.delete(
+      `http://localhost:4000/api/appointments/appointments/${appointment._id}/decline`
+    );
+
+    setAppointments(prev =>
+      prev.filter(appt => appt._id !== appointment._id) // remove from UI
+    );
+
+    alert("Appointment cancelled and applicant notified via email!");
+  } catch (error) {
+    console.error("Decline error:", error);
+    alert(error.response?.data?.error || "Failed to cancel appointment");
+  }
+};
 
   const handleConfirm = async (appointment) => {
     try {
@@ -72,12 +88,20 @@ const Appointments = () => {
               <p><strong>Contact:</strong> {appt.contact}</p>
               <p><strong>Date:</strong> {new Date(appt.preferredDate).toLocaleDateString()}</p>
               <p><strong>Time:</strong> {appt.preferredTime}</p>
-              <button
-                onClick={() => handleConfirm(appt)}
-                className="confirm-button"
-              >
-                Confirm Appointment
-              </button>
+              <div className="button-group">
+  <button
+    onClick={() => handleConfirm(appt)}
+    className="confirm-button"
+  >
+    Confirm
+  </button>
+  <button
+    onClick={() => handleDecline(appt)}
+    className="decline-button"
+  >
+    Decline
+  </button>
+</div>
             </>
           ) : (
             <p className="minimized-info">✔️ Appointment Confirmed</p>

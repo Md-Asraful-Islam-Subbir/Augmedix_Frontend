@@ -33,18 +33,45 @@
 .appointment-card strong {
   color: #111;
 }
-.appointment-card button {
-  padding: 8px 14px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+
+/* Button container */
+.appointment-card .button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.appointment-card button:hover {
-  background-color: #45a049;
+/* Base button style */
+.appointment-card button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
+
+/* Confirm button */
+.appointment-card .confirm-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.appointment-card .confirm-button:hover {
+  background-color: #43a047;
+}
+
+/* Decline button */
+.appointment-card .decline-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.appointment-card .decline-button:hover {
+  background-color: #d32f2f;
+}
+
 .minimized-info {
   font-style: italic;
   color: green;
