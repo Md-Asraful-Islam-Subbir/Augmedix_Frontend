@@ -1,7 +1,8 @@
 import React from 'react';
 import './WhyClinixNote.css';
-import { FaHandsHelping, FaFileMedicalAlt, FaLock } from 'react-icons/fa';
-
+import { LiaHandsHelpingSolid } from "react-icons/lia";
+import { LiaFileMedicalAltSolid } from "react-icons/lia";
+import { CiLock } from "react-icons/ci";
 const WhyClinixNote = () => {
   return (
     <section className="why-ClinixNote">
@@ -14,7 +15,7 @@ const WhyClinixNote = () => {
       </div>
       <div className="cards">
         <div className="cardd">
-          <FaHandsHelping className="icon" />
+          <LiaHandsHelpingSolid  className="icon" />
           <h3>Self-service to full-service</h3>
           <p>
             Only ClinixNote offers a suite of solutions with customizable levels of AI automation and human support so that you can
@@ -22,7 +23,7 @@ const WhyClinixNote = () => {
           </p>
         </div>
         <div className="cardd">
-          <FaFileMedicalAlt className="icon" />
+          <LiaFileMedicalAltSolid  className="icon" />
           <h3>Specialties are our specialty</h3>
           <p>
             With a bespoke app for Emergency Medicine and AI fine-tuned for oncology and other specialties, ClinixNote handles complex
@@ -30,7 +31,7 @@ const WhyClinixNote = () => {
           </p>
         </div>
         <div className="cardd">
-          <FaLock className="icon" />
+          <CiLock className="icon" />
           <h3>Uncompromising security</h3>
           <p>
             With HITRUST certification and HIPAA compliance, ClinixNote delivers enterprise-grade security to ensure that your

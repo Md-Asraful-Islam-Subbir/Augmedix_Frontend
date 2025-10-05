@@ -241,6 +241,17 @@
   background-color: tomato;
   color: white;
 }
+.navbar-menu-left li a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+}
+
+.navbar-menu-left li a.active-link {
+  border-bottom: 2px solid #007bff; /* underline */
+  color: #007bff; /* highlight color */
+  font-weight: bold;
+}
 
 
 /* Responsive */

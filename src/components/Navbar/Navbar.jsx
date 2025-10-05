@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, NavLink,Link } from "react-router-dom";
 import { StoreContext } from '../../context/StoreContext';
 import './Navbar.css';
 import { assets } from '../../assets/assets';
@@ -40,10 +40,23 @@ const Navbar = ({ setShowLogin, showLogin }) => {
       {/* Desktop menu */}
       <div className="navbar-center">
         <ul className="navbar-menu-left">
-          <li><Link to="/product-overview">Products</Link></li>
-          <li><Link to="/about-us">About Us</Link></li>
-          <li><Link to="/resources">Resources</Link></li>
-        </ul>
+  <li>
+    <NavLink to="/product-overview" className={({ isActive }) => isActive ? "active-link" : ""}>
+      Products
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="/about-us" className={({ isActive }) => isActive ? "active-link" : ""}>
+      About Us
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="/resources" className={({ isActive }) => isActive ? "active-link" : ""}>
+      Resources
+    </NavLink>
+  </li>
+</ul>
+
       </div>
 
       <div className="navbar-right">

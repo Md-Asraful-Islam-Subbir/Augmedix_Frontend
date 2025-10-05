@@ -46,8 +46,9 @@
   /* Description text */
   .container .description {
     font-size: 22px;
-    color: #555 !important;
+    color: black !important;
     max-width: 800px;
     margin-top: 20px;
+    text-align: center !important;
   }
   

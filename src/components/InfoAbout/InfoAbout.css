@@ -42,14 +42,18 @@
 
 .text-container {
   flex: 1;
-  max-width: 40%; 
+  max-width: 40%;   
+  margin-top: 50px;
 }
 
 .about-text {
+
+  
   font-size: 22px; 
-  line-height: 1.8;
+  line-height: 2;
   color: #555;
-  animation: fadeIn 2s ease-in-out; text-align: left;
+  animation: fadeIn 2s ease-in-out; 
+  text-align: justify;
 }
 
 

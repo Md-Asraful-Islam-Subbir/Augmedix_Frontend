@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginPopup.css';
 import { assets } from '../../assets/assets';
-
+import { IoIosMail, IoIosEye, IoIosEyeOff } from "react-icons/io";
 const SECTIONS = ["Patient", "Doctor", "Admin"];
 
 const LoginPopup = ({ setShowLogin }) => {
@@ -15,7 +15,7 @@ const LoginPopup = ({ setShowLogin }) => {
   });
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+const [showPassword, setShowPassword] = useState(false);
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -129,12 +129,18 @@ else {
           </div>
         )}
         <div className="input-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email</label><IoIosMail className="input-icon" />
           <input id="email" name="email" type="email" placeholder='your@email.com' onChange={onChangeHandler} required />
         </div>
         <div className="input-group">
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" placeholder='••••••••' onChange={onChangeHandler} required />
+          <input id="password" name="password" type={showPassword ? "text" : "password"} placeholder='••••••••' onChange={onChangeHandler} required />
+        <span
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <IoIosEyeOff /> : <IoIosEye />}
+          </span>
         </div>
       </div>
       <button type="submit" disabled={isLoading} aria-busy={isLoading}>
@@ -170,7 +176,7 @@ else {
               <input id="name" name='name' type="text" placeholder='Dr. John Smith' onChange={onChangeHandler} required />
             </div>
             <div className="input-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Email</label><IoIosMail className="input-icon" />
               <input id="email" name='email' type="email" placeholder='your@email.com' onChange={onChangeHandler} required />
             </div>
             <div className="input-group">
@@ -182,12 +188,18 @@ else {
         {formState === "Login" && (
           <>
             <div className="input-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Email</label> <IoIosMail className="input-icon" />
               <input id="email" name="email" type="email" placeholder='your@email.com' onChange={onChangeHandler} required />
             </div>
             <div className="input-group">
               <label htmlFor="password">Password</label>
-              <input id="password" name="password" type="password" placeholder='••••••••' onChange={onChangeHandler} required />
+              <input id="password" name="password" type={showPassword ? "text" : "password"} placeholder='••••••••' onChange={onChangeHandler} required />
+            <span
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <IoIosEyeOff /> : <IoIosEye />}
+          </span>
             </div>
           </>
         )}
@@ -219,12 +231,18 @@ else {
       </div>
       <div className="login-popup-inputs">
         <div className="input-group">
-          <label htmlFor="email">Admin Email</label>
+          <label htmlFor="email">Admin Email</label><IoIosMail className="input-icon" />
           <input id="email" name="email" type="email" placeholder='admin@example.com' onChange={onChangeHandler} required />
         </div>
         <div className="input-group">
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" placeholder='••••••••' onChange={onChangeHandler} required />
+          <input id="password" name="password" type={showPassword ? "text" : "password"} placeholder='••••••••' onChange={onChangeHandler} required />
+        <span
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <IoIosEyeOff /> : <IoIosEye />}
+          </span>
         </div>
       </div>
       <button type="submit" disabled={isLoading} aria-busy={isLoading}>
@@ -236,6 +254,7 @@ else {
         ) : "Login"}
       </button>
       <div className="login-popup-actions">
+        <p>*only for authorized members</p>
         <p className="forgot-link" onClick={() => setShowForgotPassword(true)}>Forgot Password?</p>
       </div>
     </form>

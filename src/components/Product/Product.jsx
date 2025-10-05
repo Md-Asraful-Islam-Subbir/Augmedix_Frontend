@@ -42,7 +42,7 @@ const Product = () => {
 
   return (
     <div className="products-container">
-      <h2>Our Products</h2>
+      <h1>Our Products</h1>
       <div className="products-container1">
       <div className="product-card">
         <div className="product-header">
@@ -83,17 +83,17 @@ const Product = () => {
               <th className="green-text">
                 <GoIcon />
                 <div>Go</div>
-                <span>Self-service</span>
+                <span style={{ color: "black" }}>Self-service</span>
               </th>
               <th className="purple-text">
                 <AssistIcon />
                 <div>Assist</div>
-                <span>Hybrid</span>
+                <span style={{ color: "black" }}>Hybrid</span>
               </th>
               <th className="red-text">
                 <LiveIcon />
                 <div>Live</div>
-                <span>Full-service</span>
+                <span style={{ color: "black" }}>Full-service</span>
               </th>
             </tr>
           </thead>

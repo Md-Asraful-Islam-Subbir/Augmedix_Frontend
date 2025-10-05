@@ -66,6 +66,8 @@
 }
 
 .icon {
-  font-size: 28px;
+  font-size: 38px;
   color: #2b3af5;
+  transition: color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
 }

@@ -45,7 +45,7 @@ const DoctorPatients = () => {
       if (!token) return;
 
       try {
-        const response = await fetch("http://localhost:4000/api/doctors/me", {
+        const response = await fetch("http://localhost:4000/api/doctor/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -97,20 +97,30 @@ const DoctorPatients = () => {
     }
   };
 
-const removePatient = async (patientId) => {
+const removePatient = async (patient) => {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`http://localhost:4000/api/patients/${patientId}`, {
+    const response = await fetch(`http://localhost:4000/api/patients`, {
       method: "DELETE",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        name: patient.name,
+        contact: patient.contact,
+        doctor: patient.doctor,
+        appointmentDate: patient.appointmentDate,
+        appointmentTime: patient.appointmentTime,
+      }),
     });
 
     if (response.ok) {
       alert("Patient removed successfully");
-      setPatients((prevPatients) => prevPatients.filter((p) => p._id !== patientId));
+      setPatients((prevPatients) =>
+        prevPatients.filter((p) => p._id !== patient._id)
+      );
     } else {
       const errData = await response.json();
       console.error("Failed to remove patient:", errData.message);
@@ -161,7 +171,7 @@ const removePatient = async (patientId) => {
               </td>
               <td>
                 <button onClick={() => setSelectedPatient(patient)}>View</button>
-                <button onClick={() => removePatient(patient._id)}>Remove</button>
+                <button onClick={() => removePatient(patient)}>Remove</button>
                 <button onClick={() => navigate("/report", { state: { patient, doctor } })}>
                   Report
                 </button>
