@@ -64,39 +64,54 @@ const DoctorPatients = () => {
   }, []);
 
   const captureImage = async (patientId) => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
-      setCapturing(false);
+  if (webcamRef.current) {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setCapturing(false);
 
-      if (!imageSrc) {
-        alert("Failed to capture image");
-        return;
-      }
-
-      const base64Data = imageSrc.split(',')[1];
-
-      try {
-        const response = await fetch(`http://localhost:4000/api/patients/${patientId}/uploadImage`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: base64Data, patientId }),
-        });
-
-        const result = await response.json();
-        console.log("Recognition result:", result);
-        setRecognitionResult(result);
-
-        setPatients((prevPatients) =>
-          prevPatients.map((p) =>
-            p._id === patientId ? { ...p, image: imageSrc } : p
-          )
-        );
-      } catch (error) {
-        console.error("Error processing face recognition:", error);
-      }
+    if (!imageSrc) {
+      alert("Failed to capture image");
+      return;
     }
-  };
 
+    // Convert base64 to a blob
+    const response = await fetch(imageSrc);
+    const blob = await response.blob();
+
+    // Use FormData to send file
+    const formData = new FormData();
+    formData.append("image", blob, "capture.jpg");
+    formData.append("patientId", patientId);
+
+    try {
+      const token = localStorage.getItem("token");
+      const uploadResponse = await fetch(
+        `http://localhost:4000/api/patients/${patientId}/uploadImage`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      const result = await uploadResponse.json();
+      console.log("Recognition result:", result);
+      setRecognitionResult(result);
+
+      // Update frontend image immediately
+      setPatients((prevPatients) =>
+        prevPatients.map((p) =>
+          p._id === patientId ? { ...p, image: imageSrc } : p
+        )
+      );
+    } catch (error) {
+      console.error("Error processing face recognition:", error);
+    }
+  }
+};
+
+console.log(patients,"images");
 const removePatient = async (patient) => {
   try {
     const token = localStorage.getItem("token");
@@ -155,7 +170,7 @@ const removePatient = async (patient) => {
               <td>
                 {patient.image ? (
                   <img 
-                    src={patient.image.startsWith('data:') ? patient.image : `data:image/jpeg;base64,${patient.image}`} 
+                    src={patient.image.startsWith('data:') ? `http://localhost:4000/uploads/${patient.image}` : `http://localhost:4000/uploads/${patient.image}`} 
                     alt="Patient" 
                     className="patient-image" 
                   />
@@ -224,24 +239,27 @@ const removePatient = async (patient) => {
         </div>
       )}
 
-      {recognitionResult && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>Recognition Result</h3>
-            <p><strong>Match:</strong> {recognitionResult.match ? "Yes" : "No"}</p>
-            <p>
-              <strong>Confidence:</strong> 
-              {recognitionResult.confidence !== undefined && !isNaN(recognitionResult.confidence) 
-                ? recognitionResult.confidence.toFixed(2) + "%" 
-                : "N/A"}
-            </p>
-            <p><strong>Message:</strong> {recognitionResult.message}</p>
-            <button className="close-button" onClick={closeRecognitionModal}>
-              Close
-            </button>
-          </div>
-        </div>
+    {recognitionResult && (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h3>Recognition Result</h3>
+      <p><strong>Match:</strong> {recognitionResult.match ? "Yes" : "No"}</p>
+      <p>
+        <strong>Confidence:</strong> 
+        {recognitionResult.score !== undefined && !isNaN(recognitionResult.score) 
+          ? (recognitionResult.score * 100).toFixed(2) + "%" 
+          : "N/A"}
+      </p>
+      {recognitionResult.match && (
+        <p><strong>Patient ID:</strong> {recognitionResult.patient_id}</p>
       )}
+      <button className="close-button" onClick={closeRecognitionModal}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

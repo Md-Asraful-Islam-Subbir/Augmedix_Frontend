@@ -327,41 +327,42 @@ const analyzeTranscription = async () => {
       <div className="report-content">
         <aside className="patient-card">
           <div className={`patient-image-container ${imageLoaded ? 'loaded' : 'loading'}`}>
-            <img 
-  src={patient.image ? `data:image/jpeg;base64,${patient.image}` : "/placeholder.jpg"} 
-  alt="Patient" 
+<img
+  src={
+    patient.image
+      ? `${(typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_URL) || "http://localhost:4000"}/uploads/${patient.image}`
+      : "/placeholder.jpg"
+  }
+  alt="Patient"
   className="patient-img"
   onLoad={handleImageLoad}
   onError={handleImageError}
 />
+
             {!imageLoaded && <div className="image-placeholder"></div>}
             <div className="patient-status">Active</div>
           </div>
           <h3>{patient.firstName} {patient.lastName}</h3>
           <div className="patient-details">
             <div className="detail-row">
-              <span className="detail-label">Age:</span>
-              <span>{patient.age || "N/A"}</span>
+              <span className="detail-label">Patient Name:</span>
+              <span>{patient.name || "N/A"}</span>
             </div>
             <div className="detail-row">
-              <span className="detail-label">Gender:</span>
-              <span>{patient.gender || "N/A"}</span>
+              <span className="detail-label">Contact:</span>
+              <span>{patient.contact || "N/A"}</span>
             </div>
             <div className="detail-row">
-              <span className="detail-label">Phone:</span>
-              <span>{patient.phone || "N/A"}</span>
+              <span className="detail-label">Doctor:</span>
+              <span>{patient.doctor || "N/A"}</span>
             </div>
             <div className="detail-row">
-              <span className="detail-label">Email:</span>
-              <span>{patient.email || "N/A"}</span>
+              <span className="detail-label">AppointmentDate:</span>
+              <span>{patient.appointmentDate|| "N/A"}</span>
             </div>
             <div className="detail-row">
-              <span className="detail-label">Last Visit:</span>
-              <span>{patient.lastVisit || "N/A"}</span>
-            </div>
-            <div className="detail-row">
-              <span className="detail-label">Procedure:</span>
-              <span>{patient.procedure || "N/A"}</span>
+              <span className="detail-label">Time:</span>
+              <span>{patient.appointmentTime || "N/A"}</span>
             </div>
           </div>
           <div className="patient-actions">
